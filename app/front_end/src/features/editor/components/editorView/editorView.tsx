@@ -307,7 +307,7 @@ export const EditorView: React.FC = () => {
           }
         }}
         slots={{
-          toolbar: (props) => <EditorToolbar {...props} disabled={blocked || !file.id} handleSave={handleSave} />,
+          toolbar: (props) => <EditorToolbar {...props} handleSave={handleSave} />,
           columnMenu: (props) => (
             <EditorColumnMenu
               {...props}
