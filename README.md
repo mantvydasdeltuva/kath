@@ -58,7 +58,7 @@ We proudly acknowledge our advisors who contribute their expertise and resources
     <p>Leading institution in education and research.</p>
   </div>
   <div>
-    <img src="docs/assets/genomika_logo_200.jpg" alt="Genomika Lietuva" style="width: 200px; height: auto; border-radius: 12px;">
+    <img src="docs/assets/genomika_logo_200.png" alt="Genomika Lietuva" style="width: 200px; height: auto; border-radius: 12px;">
     <h3><a href="https://genomika.lt">Genomika Lietuva</a></h3>
     <p>Innovative solutions in genomics and biotechnology.</p>
   </div>
