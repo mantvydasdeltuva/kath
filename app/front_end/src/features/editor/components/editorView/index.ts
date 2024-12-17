@@ -8,3 +8,5 @@ export { EditorHeader } from './editorHeader';
 export type { EditorHeaderProps } from './editorHeader';
 export { EditorToolbar } from './editorToolbar';
 export { EditorView } from './editorView';
+export { EditorColumnMenuFilterItem } from './editorColumnMenuFilterItem';
+export type { EditorColumnMenuFilterItemProps } from './editorColumnMenuFilterItem';
