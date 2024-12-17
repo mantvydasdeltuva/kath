@@ -22,16 +22,16 @@
 
 | **Team Member** | **Institution** | **Role** | **GitHub** | **LinkedIn** | **Active** |
 |:-:|:-:|:-:|:-:|:-:|:-:|
-| Kazimieras Bagdonas | Kaunas University of Technology | Project Mentor |  | [kazbag](https://www.linkedin.com/in/kazbag/) | ✅ |
-| Ignas Sabaliauskas | Kaunas University of Technology | Communications Lead |  | [ignas-sabaliauskas](https://www.linkedin.com/in/ignas-sabaliauskas/) | ✅ |
+| Kazimieras Bagdonas | Kaunas University of Technology | Project Mentor | - | [kazbag](https://www.linkedin.com/in/kazbag/) | ✅ |
+| Ignas Sabaliauskas | Kaunas University of Technology | Communications Lead | - | [ignas-sabaliauskas](https://www.linkedin.com/in/ignas-sabaliauskas/) | ✅ |
 
 #### 🧩 Front End Team:
 
 | **Team Member** | **Institution** | **Role** | **GitHub** | **LinkedIn** | **Active** |
 |:-:|:-:|:-:|:-:|:-:|:-:|
-| Mantvydas Deltuva | Kaunas University of Technology | Lead Frontend Developer | [mantvydasdeltuva](https://github.com/mantvydasdeltuva/) | [mantvydasdeltuva](https://www.linkedin.com/in/mantvydasdeltuva/) | ✅ |
-| Justinas Teselis | Kaunas University of Technology | Frontend Developer | [justinnas](https://github.com/justinnas/) | [justinasteselis](https://www.linkedin.com/in/justinasteselis/) | ✅ |
-| Paulius Preikša | Kaunas University of Technology | Frontend Developer | [PauliusPreiksaCode](https://github.com/PauliusPreiksaCode) | [paulius-preiksa](https://www.linkedin.com/in/paulius-preiksa/) | ❌ |
+| Mantvydas Deltuva | Kaunas University of Technology | Lead Frontend Developer | [mantvydasdeltuva](https://github.com/mantvydasdeltuva/) | [here](https://www.linkedin.com/in/mantvydasdeltuva/) | ✅ |
+| Justinas Teselis | Kaunas University of Technology | Frontend Developer | [justinnas](https://github.com/justinnas/) | [here](https://www.linkedin.com/in/justinasteselis/) | ✅ |
+| Paulius Preikša | Kaunas University of Technology | Frontend Developer | [PauliusPreiksaCode](https://github.com/PauliusPreiksaCode) | [here](https://www.linkedin.com/in/paulius-preiksa/) | ❌ |
 
 #### 🗄️ Back End Team:
 
@@ -40,13 +40,16 @@
 | Vladyslav Levchenko | Kaunas University of Technology | Backend Developer | [Akaud](https://github.com/Akaud) | [here](https://www.linkedin.com/in/vladyslav-levchenko-409656324/) | ✅ |
 | Kajus Černiauskas | Kaunas University of Technology | Backend Developer | [KajusC](https://github.com/KajusC) | [here](https://www.linkedin.com/in/kajus-%C4%8Derniauskas-a68506205/) | ✅ |
 | Nojus Sajauskas | Kaunas University of Technology | Backend Developer | [nojux-official](https://github.com/nojux-official) | [here](https://www.linkedin.com/in/nojus-sajauskas-7aa74b259/) | ✅ |
+| Yehor Nesterenko | Kaunas University of Technology | Backend Developer | - | [here](https://www.linkedin.com/in/yehor-nesterenko-20b471298/) | ✅ |
+| Marius Petrauskas | Kaunas University of Technology | Backend Developer | - | - | ✅ |
+| Ernest Tretjakov | Kaunas University of Technology | Backend Developer | - | [here](https://www.linkedin.com/in/ernest-tretjakov/) | ✅ |
 | Dainius Kirsnauskas | Kaunas University of Technology | Lead Backend Developer | [Strexas](https://github.com/Strexas) | [here](https://www.linkedin.com/in/dainius-kirsnauskas-2b8915276/) | ❌ |
 
 ---
 
-### 🤝 Partners
+### 🤝 Advisors
 
-We proudly acknowledge our partners who contribute their expertise and resources to support kath’s development:
+We proudly acknowledge our advisors who contribute their expertise and resources to support kath’s development:
 
 <div align="center">
   <div>
@@ -55,7 +58,7 @@ We proudly acknowledge our partners who contribute their expertise and resources
     <p>Leading institution in education and research.</p>
   </div>
   <div>
-    <img src="docs/assets/genomika_logo_200.jpg" alt="Genomika Lietuva" style="width: 200px; height: auto; border-radius: 12px;">
+    <img src="docs/assets/genomika_logo_200.png" alt="Genomika Lietuva" style="width: 200px; height: auto; border-radius: 12px;">
     <h3><a href="https://genomika.lt">Genomika Lietuva</a></h3>
     <p>Innovative solutions in genomics and biotechnology.</p>
   </div>
