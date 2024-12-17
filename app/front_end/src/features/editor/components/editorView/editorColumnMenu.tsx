@@ -1,9 +1,9 @@
-import { EditorColumnMenuAggregationItem, EditorColumnMenuSortItem } from '@/features/editor/components/editorView';
+import { EditorColumnMenuAggregationItem, EditorColumnMenuFilterItem, EditorColumnMenuSortItem } from '@/features/editor/components/editorView';
 import { useWorkspaceContext } from '@/features/editor/hooks';
 import { FileContentAggregationActions, SortEnum } from '@/features/editor/types';
 import { Divider } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { GridColumnMenuContainer, GridColumnMenuHideItem, GridColumnMenuProps } from '@mui/x-data-grid';
+import { GridColumnMenuContainer, GridColumnMenuProps } from '@mui/x-data-grid';
 
 const StyledGridColumnMenuContainer = styled(GridColumnMenuContainer)(({ theme }) => ({
   borderRadius: '1rem',
@@ -58,13 +58,13 @@ export const EditorColumnMenu: React.FC<GridColumnMenuContainerProps> = ({
         onSort={(sort: SortEnum) => handleSort(colDef.field, sort)}
       ></EditorColumnMenuSortItem>
       <Divider />
+      <EditorColumnMenuFilterItem />
+      <Divider />
       <EditorColumnMenuAggregationItem
         initialValue={aggregationActiveAction}
         onClick={hideMenu}
         onAction={(action) => handleAggregation(colDef.field, action)}
       />
-      <Divider />
-      <GridColumnMenuHideItem onClick={hideMenu} colDef={colDef!} />
     </StyledGridColumnMenuContainer>
   ) : null;
 };

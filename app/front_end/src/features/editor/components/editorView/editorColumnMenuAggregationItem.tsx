@@ -1,6 +1,6 @@
 import { FileContentAggregationActions } from '@/features/editor/types';
 import { Functions as FunctionsIcon } from '@mui/icons-material';
-import { Box, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, useTheme } from '@mui/material';
+import { Box, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Typography, useTheme } from '@mui/material';
 import { MouseEvent, useState } from 'react';
 
 export interface EditorColumnMenuAggregationItemProps {
@@ -63,14 +63,23 @@ export const EditorColumnMenuAggregationItem: React.FC<EditorColumnMenuAggregati
     >
       <FunctionsIcon sx={{ color: Theme.palette.text.secondary }} />
       <FormControl fullWidth size='small'>
-        <InputLabel sx={{ color: Theme.palette.text.primary, fontSize: '0.9rem' }}>Aggregation</InputLabel>
+        <InputLabel>
+          <Box 
+            sx={{
+              bgcolor: Theme.palette.background.default,
+              pr: '0.5rem',
+            }}
+          >
+            <Typography>Aggregation</Typography>
+          </Box>
+        </InputLabel>
         <Select
           id={'aggregation-select'}
           label={'Aggregation'}
           value={value}
           onChange={handleChange}
           size='small'
-          style={{ fontSize: '0.9rem' }}
+          sx={{ fontSize: '0.8rem' }}
         >
           <MenuItem value={FileContentAggregationActions.NONE} onClick={onClick}>
             ...
