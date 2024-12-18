@@ -1,12 +1,14 @@
-import { FileContentAggregationModel, FileContentSortModel, SortEnum } from '@/features/editor/types';
+import { FileContentAggregationModel, FileContentFilterModel, FileContentSortModel, SortEnum } from '@/features/editor/types';
 import { ArrowDownward as ArrowDownwardIcon, ArrowUpward as ArrowUpwardIcon } from '@mui/icons-material';
 import { Box, Typography, useTheme } from '@mui/material';
+import { FilterAlt as FilterAltIcon } from '@mui/icons-material';
 import React from 'react';
 
 export interface EditorHeaderProps {
   columnName: string;
   gridColumnsAggregation: FileContentAggregationModel;
   gridColumnsSort: FileContentSortModel;
+  gridColumnsFilter: FileContentFilterModel;
 }
 
 /**
@@ -26,6 +28,7 @@ export const EditorHeader: React.ElementType<EditorHeaderProps> = ({
   columnName,
   gridColumnsAggregation,
   gridColumnsSort,
+  gridColumnsFilter,
 }) => {
   const Theme = useTheme();
 
@@ -45,6 +48,14 @@ export const EditorHeader: React.ElementType<EditorHeaderProps> = ({
           {gridColumnsAggregation[columnName]?.action.toUpperCase()}
         </Typography>
         <Typography sx={{ fontSize: '0.875rem', fontWeight: 'bold' }}>{columnName}</Typography>
+        {gridColumnsFilter[columnName] != null ? (
+          <FilterAltIcon 
+            sx={{
+              fontSize: '1.25rem',
+              color: Theme.palette.primary.main,
+            }}
+          />
+        ) : null}
         {gridColumnsSort[columnName] === SortEnum.ASC ? (
           <ArrowUpwardIcon
             sx={{

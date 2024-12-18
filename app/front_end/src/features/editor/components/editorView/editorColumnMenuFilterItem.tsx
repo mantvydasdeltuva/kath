@@ -1,42 +1,51 @@
 import { FilterAlt as FilterAltIcon } from '@mui/icons-material';
-import { Box, FormControl, InputLabel, MenuItem, OutlinedInput, Select, SelectChangeEvent, Typography, useTheme } from '@mui/material';
+import { Box, Button, FormControl, InputLabel, MenuItem, OutlinedInput, Select, SelectChangeEvent, Typography, useTheme } from '@mui/material';
 import { FilterEnum } from '@/features/editor/types';
-import { SyntheticEvent, useState } from 'react';
+import { useState, MouseEvent as MouseEventReact } from 'react';
 
 export interface EditorColumnMenuFilterItemProps {
-    onClick: (event:  SyntheticEvent<Element, Event>) => void;
-    onFilter: (operator: FilterEnum) => void;
+    initialOperator: FilterEnum;
+    initialValue: string;
+    onClick: (event: MouseEventReact<HTMLButtonElement, MouseEvent>) => void;
+    onFilter: (operator: FilterEnum, value: string) => void;
 }
 
-export const EditorColumnMenuFilterItem: React.FC<EditorColumnMenuFilterItemProps> = ({}) => {
+export const EditorColumnMenuFilterItem: React.FC<EditorColumnMenuFilterItemProps> = ({ initialOperator, initialValue, onClick, onFilter}) => {
   const Theme = useTheme();
 
-  const [operator, setOperator] = useState<FilterEnum>(FilterEnum.CONTAINS);
+  const [operator, setOperator] = useState<FilterEnum>(initialOperator);
+  const [value, setValue] = useState<string>(initialValue);
 
-  const handleChange = (event: SelectChangeEvent) => {
+  const handleOperatorChange = (event: SelectChangeEvent) => {
     const operator = event.target.value as FilterEnum;
     setOperator(operator);
   };
+
+  const handleValueChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(event.target.value);
+  };
+
+  const handleClick = (event: MouseEventReact<HTMLButtonElement, MouseEvent>) => {
+    onClick(event);
+    onFilter(operator, value);
+  }
 
   return (
     <Box
       sx={{
         display: 'flex',
-        flexDirection: 'row',
-        gap: '1rem',
-        alignItems: 'center',
-        px: '0.85rem',
-        py: '1rem',
+        flexDirection: 'column',
       }}
     >
-      <FilterAltIcon sx={{ color: Theme.palette.text.secondary }} />
       <Box
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          width: '100%',
           gap: '1rem',
           alignItems: 'center',
+          px: '0.85rem',
+          py: '1rem',
+          bgcolor: Theme.palette.background.default,
         }}
       >
         <FormControl fullWidth size='small'>
@@ -54,7 +63,7 @@ export const EditorColumnMenuFilterItem: React.FC<EditorColumnMenuFilterItemProp
             id='filter-operator'
             label='Operator'
             value={operator}
-            onChange={handleChange}
+            onChange={handleOperatorChange}
             size='small'
             sx={{
               fontSize: '0.8rem',
@@ -100,9 +109,12 @@ export const EditorColumnMenuFilterItem: React.FC<EditorColumnMenuFilterItemProp
           <OutlinedInput
             id='filter-value'
             label="Value"
+            value={value}
+            onChange={handleValueChange}
             size='small'
             sx={{
               fontSize: '0.8rem',
+              color: Theme.palette.text.secondary,
               '.MuiOutlinedInput-notchedOutline': {
                   borderColor: '#404040',
               },
@@ -114,6 +126,16 @@ export const EditorColumnMenuFilterItem: React.FC<EditorColumnMenuFilterItemProp
           </OutlinedInput>
         </FormControl>
       </Box>
+
+      <Button
+        onClick={handleClick}
+        sx={{ justifyContent: 'left', px: '0.85rem', borderRadius: '0' }}
+      >
+        <Box sx={{ display: 'flex', flexDirection: 'row', gap: '1rem', alignItems: 'center' }}>
+          <FilterAltIcon sx={{ color: Theme.palette.text.secondary }} />
+          <Typography>Filter</Typography>
+        </Box>
+      </Button>
     </Box>
   );
 };

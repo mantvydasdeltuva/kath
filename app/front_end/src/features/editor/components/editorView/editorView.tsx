@@ -151,8 +151,10 @@ export const EditorView: React.FC = () => {
     fileStateUpdate(undefined, { ...fileContent, sorts: { [column]: sort } }, undefined);
   };
 
-  const handleFilter = async (column: string, operator: FilterEnum) => {
+  const handleFilter = async (column: string, operator: FilterEnum, value: string) => {
+    // TODO Implement filter reset
 
+    fileStateUpdate(undefined, { ...fileContent, filters: { [column]: { operator, value } } }, undefined);
   }
   
   const onCellEditStart = () => {
@@ -173,6 +175,7 @@ export const EditorView: React.FC = () => {
           page: filePagination.page,
           rowsPerPage: filePagination.rowsPerPage,
           sorts: JSON.stringify(fileContent.sorts),
+          // TODO Implement filters params to backend
         },
       });
 
@@ -183,7 +186,7 @@ export const EditorView: React.FC = () => {
       setIsLoading(false);
       blockedStateUpdate(false);
     }
-  }, [filePagination.page, filePagination.rowsPerPage, fileContent.sorts]);
+  }, [filePagination.page, filePagination.rowsPerPage, fileContent.sorts, fileContent.filters]);
 
   // File content fetching effect
   useEffect(() => {
@@ -194,7 +197,7 @@ export const EditorView: React.FC = () => {
   useEffect(() => {
     fileStateUpdate(
       undefined,
-      { columns: fileContent.columns, rows: fileContent.rows, aggregations: {}, sorts: {} },
+      { columns: fileContent.columns, rows: fileContent.rows, aggregations: {}, sorts: {}, filters: {}}, // TODO might need change on sorts and filters
       undefined
     );
   }, [file.id]);
@@ -206,7 +209,7 @@ export const EditorView: React.FC = () => {
     if (!header) {
       fileStateUpdate(
         undefined,
-        { columns: [], rows: [], aggregations: fileContent.aggregations, sorts: fileContent.sorts },
+        { columns: [], rows: [], aggregations: fileContent.aggregations, sorts: fileContent.sorts, filters: fileContent.filters },
         undefined
       );
       return;
@@ -224,6 +227,7 @@ export const EditorView: React.FC = () => {
             columnName={value}
             gridColumnsAggregation={fileContent.aggregations}
             gridColumnsSort={fileContent.sorts}
+            gridColumnsFilter={fileContent.filters}
           />
         ),
       };
@@ -240,10 +244,10 @@ export const EditorView: React.FC = () => {
 
     fileStateUpdate(
       undefined,
-      { columns: parsedColumns, rows: parsedRows, aggregations: fileContent.aggregations, sorts: fileContent.sorts },
+      { columns: parsedColumns, rows: parsedRows, aggregations: fileContent.aggregations, sorts: fileContent.sorts, filters: fileContent.filters },
       { page: filePagination.page, rowsPerPage: filePagination.rowsPerPage, totalRows: totalRows }
     );
-  }, [fileContentResponse, fileContent.aggregations, fileContent.sorts]);
+  }, [fileContentResponse, fileContent.aggregations, fileContent.sorts, fileContent.filters]);
 
   // Browser tab close/refresh warning if there are unsaved changes effect
   useEffect(() => {
