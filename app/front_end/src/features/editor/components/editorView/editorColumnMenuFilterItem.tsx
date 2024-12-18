@@ -125,6 +125,7 @@ export const EditorColumnMenuFilterItem: React.FC<EditorColumnMenuFilterItemProp
             size='small'
             sx={{
               fontSize: '0.8rem',
+              color: Theme.palette.text.secondary,
               '.MuiOutlinedInput-notchedOutline': {
                   borderColor: '#404040',
               },
