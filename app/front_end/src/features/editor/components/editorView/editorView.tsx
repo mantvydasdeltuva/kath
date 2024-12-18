@@ -156,6 +156,10 @@ export const EditorView: React.FC = () => {
 
     fileStateUpdate(undefined, { ...fileContent, filters: { [column]: { operator, value } } }, undefined);
   }
+
+  const handleFilterClear = async () => {
+    fileStateUpdate(undefined, { ...fileContent, filters: {} }, undefined);
+  }
   
   const onCellEditStart = () => {
     unsavedStateUpdate(true);
@@ -324,6 +328,7 @@ export const EditorView: React.FC = () => {
               handleAggregation={handleAggregation}
               handleSort={handleSort}
               handleFilter={handleFilter}
+              handleFilterClear={handleFilterClear}
             />
           ),
           pagination: (props) => <GridPagination disabled={blocked} {...props} />,

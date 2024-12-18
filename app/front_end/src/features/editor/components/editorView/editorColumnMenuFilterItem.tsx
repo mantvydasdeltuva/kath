@@ -8,9 +8,10 @@ export interface EditorColumnMenuFilterItemProps {
     initialValue: string;
     onClick: (event: MouseEventReact<HTMLButtonElement, MouseEvent>) => void;
     onFilter: (operator: FilterEnum, value: string) => void;
+    onFilterClear: () => void;
 }
 
-export const EditorColumnMenuFilterItem: React.FC<EditorColumnMenuFilterItemProps> = ({ initialOperator, initialValue, onClick, onFilter}) => {
+export const EditorColumnMenuFilterItem: React.FC<EditorColumnMenuFilterItemProps> = ({ initialOperator, initialValue, onClick, onFilter, onFilterClear}) => {
   const Theme = useTheme();
 
   const [operator, setOperator] = useState<FilterEnum>(initialOperator);
@@ -32,6 +33,7 @@ export const EditorColumnMenuFilterItem: React.FC<EditorColumnMenuFilterItemProp
 
   const handleClearClick = (event: MouseEventReact<HTMLButtonElement, MouseEvent>) => {
     onClick(event);
+    onFilterClear();
   }
 
   return (
@@ -146,7 +148,7 @@ export const EditorColumnMenuFilterItem: React.FC<EditorColumnMenuFilterItemProp
       >
         <Box sx={{ display: 'flex', flexDirection: 'row', gap: '1rem', alignItems: 'center' }}>
           <FilterAltOffIcon sx={{ color: Theme.palette.text.secondary }} />
-          <Typography>Clear filter</Typography>
+          <Typography>Clear Filter</Typography>
         </Box>
       </Button>
     </Box>
