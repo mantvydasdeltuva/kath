@@ -82,22 +82,22 @@ export const EditorColumnMenuAggregationItem: React.FC<EditorColumnMenuAggregati
           sx={{ fontSize: '0.8rem' }}
         >
           <MenuItem value={FileContentAggregationActions.NONE} onClick={onClick}>
-            ...
+            <i>none</i>
           </MenuItem>
           <MenuItem value={FileContentAggregationActions.SUM} onClick={onClick}>
-            Sum
+            sum
           </MenuItem>
           <MenuItem value={FileContentAggregationActions.AVG} onClick={onClick}>
-            Average
+            average
           </MenuItem>
           <MenuItem value={FileContentAggregationActions.MIN} onClick={onClick}>
-            Minimum
+            minimum
           </MenuItem>
           <MenuItem value={FileContentAggregationActions.MAX} onClick={onClick}>
-            Maximum
+            maximum
           </MenuItem>
           <MenuItem value={FileContentAggregationActions.COUNT} onClick={onClick}>
-            Count
+            count
           </MenuItem>
         </Select>
       </FormControl>

@@ -21,6 +21,7 @@ interface GridColumnMenuContainerProps extends GridColumnMenuProps {
   handleAggregation: (column: string, action: FileContentAggregationActions) => void;
   handleSort: (column: string, sort: SortEnum) => void;
   handleFilter: (column: string, operator: FilterEnum, value: string) => void;
+  handleFilterClear: () => void;
 }
 
 /**
@@ -44,6 +45,7 @@ export const EditorColumnMenu: React.FC<GridColumnMenuContainerProps> = ({
   handleAggregation,
   handleSort,
   handleFilter,
+  handleFilterClear,
   hideMenu,
   colDef,
   ...other
@@ -67,6 +69,7 @@ export const EditorColumnMenu: React.FC<GridColumnMenuContainerProps> = ({
         initialValue={filterActiveValue}
         onClick={hideMenu}
         onFilter={(operator: FilterEnum, value: string) => handleFilter(colDef.field, operator, value)}
+        onFilterClear={handleFilterClear}
       />
       <Divider />
       <EditorColumnMenuAggregationItem

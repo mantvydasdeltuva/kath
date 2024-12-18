@@ -1,4 +1,4 @@
-import { FilterAlt as FilterAltIcon } from '@mui/icons-material';
+import { FilterAlt as FilterAltIcon, FilterAltOff as FilterAltOffIcon } from '@mui/icons-material';
 import { Box, Button, FormControl, InputLabel, MenuItem, OutlinedInput, Select, SelectChangeEvent, Typography, useTheme } from '@mui/material';
 import { FilterEnum } from '@/features/editor/types';
 import { useState, MouseEvent as MouseEventReact } from 'react';
@@ -8,9 +8,10 @@ export interface EditorColumnMenuFilterItemProps {
     initialValue: string;
     onClick: (event: MouseEventReact<HTMLButtonElement, MouseEvent>) => void;
     onFilter: (operator: FilterEnum, value: string) => void;
+    onFilterClear: () => void;
 }
 
-export const EditorColumnMenuFilterItem: React.FC<EditorColumnMenuFilterItemProps> = ({ initialOperator, initialValue, onClick, onFilter}) => {
+export const EditorColumnMenuFilterItem: React.FC<EditorColumnMenuFilterItemProps> = ({ initialOperator, initialValue, onClick, onFilter, onFilterClear}) => {
   const Theme = useTheme();
 
   const [operator, setOperator] = useState<FilterEnum>(initialOperator);
@@ -28,6 +29,11 @@ export const EditorColumnMenuFilterItem: React.FC<EditorColumnMenuFilterItemProp
   const handleClick = (event: MouseEventReact<HTMLButtonElement, MouseEvent>) => {
     onClick(event);
     onFilter(operator, value);
+  }
+
+  const handleClearClick = (event: MouseEventReact<HTMLButtonElement, MouseEvent>) => {
+    onClick(event);
+    onFilterClear();
   }
 
   return (
@@ -56,7 +62,7 @@ export const EditorColumnMenuFilterItem: React.FC<EditorColumnMenuFilterItemProp
                 pr: '0.5rem',
               }}
             >
-              <Typography>Operator</Typography>
+              <Typography>Filter Operator</Typography>
             </Box>
           </InputLabel>
           <Select
@@ -103,7 +109,7 @@ export const EditorColumnMenuFilterItem: React.FC<EditorColumnMenuFilterItemProp
                 pr: '0.5rem',
               }}
             >
-              <Typography>Value</Typography>
+              <Typography>Filter Value</Typography>
             </Box>
           </InputLabel>
           <OutlinedInput
@@ -134,6 +140,15 @@ export const EditorColumnMenuFilterItem: React.FC<EditorColumnMenuFilterItemProp
         <Box sx={{ display: 'flex', flexDirection: 'row', gap: '1rem', alignItems: 'center' }}>
           <FilterAltIcon sx={{ color: Theme.palette.text.secondary }} />
           <Typography>Filter</Typography>
+        </Box>
+      </Button>
+      <Button
+        onClick={handleClearClick}
+        sx={{ justifyContent: 'left', px: '0.85rem', borderRadius: '0' }}
+      >
+        <Box sx={{ display: 'flex', flexDirection: 'row', gap: '1rem', alignItems: 'center' }}>
+          <FilterAltOffIcon sx={{ color: Theme.palette.text.secondary }} />
+          <Typography>Clear Filter</Typography>
         </Box>
       </Button>
     </Box>

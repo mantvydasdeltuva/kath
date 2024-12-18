@@ -152,9 +152,11 @@ export const EditorView: React.FC = () => {
   };
 
   const handleFilter = async (column: string, operator: FilterEnum, value: string) => {
-    // TODO Implement filter reset
-
     fileStateUpdate(undefined, { ...fileContent, filters: { [column]: { operator, value } } }, undefined);
+  }
+
+  const handleFilterClear = async () => {
+    fileStateUpdate(undefined, { ...fileContent, filters: {} }, undefined);
   }
   
   const onCellEditStart = () => {
@@ -324,6 +326,7 @@ export const EditorView: React.FC = () => {
               handleAggregation={handleAggregation}
               handleSort={handleSort}
               handleFilter={handleFilter}
+              handleFilterClear={handleFilterClear}
             />
           ),
           pagination: (props) => <GridPagination disabled={blocked} {...props} />,
