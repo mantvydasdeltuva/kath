@@ -227,6 +227,7 @@ export const EditorView: React.FC = () => {
             columnName={value}
             gridColumnsAggregation={fileContent.aggregations}
             gridColumnsSort={fileContent.sorts}
+            gridColumnsFilter={fileContent.filters}
           />
         ),
       };
