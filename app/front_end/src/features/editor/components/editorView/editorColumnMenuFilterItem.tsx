@@ -37,24 +37,13 @@ export const EditorColumnMenuFilterItem: React.FC<EditorColumnMenuFilterItemProp
         flexDirection: 'column',
       }}
     >
-      <Button
-        onClick={handleClick}
-        sx={{ justifyContent: 'left', px: '0.85rem', borderRadius: '0' }}
-      >
-        <Box sx={{ display: 'flex', flexDirection: 'row', gap: '1rem', alignItems: 'center' }}>
-          <FilterAltIcon sx={{ color: Theme.palette.text.secondary }} />
-          <Typography>Filter</Typography>
-        </Box>
-      </Button>
-
       <Box
         sx={{
           display: 'flex',
           flexDirection: 'column',
           gap: '1rem',
           alignItems: 'center',
-          pl: '3.35rem',
-          pr: '0.85rem',
+          px: '0.85rem',
           py: '1rem',
           bgcolor: Theme.palette.background.default,
         }}
@@ -137,6 +126,16 @@ export const EditorColumnMenuFilterItem: React.FC<EditorColumnMenuFilterItemProp
           </OutlinedInput>
         </FormControl>
       </Box>
+
+      <Button
+        onClick={handleClick}
+        sx={{ justifyContent: 'left', px: '0.85rem', borderRadius: '0' }}
+      >
+        <Box sx={{ display: 'flex', flexDirection: 'row', gap: '1rem', alignItems: 'center' }}>
+          <FilterAltIcon sx={{ color: Theme.palette.text.secondary }} />
+          <Typography>Filter</Typography>
+        </Box>
+      </Button>
     </Box>
   );
 };
