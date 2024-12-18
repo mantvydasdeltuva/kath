@@ -9,6 +9,7 @@ import {
   FileContentAggregationActions,
   FileDataRequestDTO,
   FileDataResponseDTO,
+  FilterEnum,
   SortEnum,
 } from '@/features/editor/types';
 import { useSessionContext, useStatusContext } from '@/hooks';
@@ -149,6 +150,10 @@ export const EditorView: React.FC = () => {
 
     fileStateUpdate(undefined, { ...fileContent, sorts: { [column]: sort } }, undefined);
   };
+
+  const handleFilter = async (column: string, operator: FilterEnum) => {
+
+  }
   
   const onCellEditStart = () => {
     unsavedStateUpdate(true);
@@ -314,6 +319,7 @@ export const EditorView: React.FC = () => {
               disabled={blocked}
               handleAggregation={handleAggregation}
               handleSort={handleSort}
+              handleFilter={handleFilter}
             />
           ),
           pagination: (props) => <GridPagination disabled={blocked} {...props} />,

@@ -1,6 +1,6 @@
 import { EditorColumnMenuAggregationItem, EditorColumnMenuFilterItem, EditorColumnMenuSortItem } from '@/features/editor/components/editorView';
 import { useWorkspaceContext } from '@/features/editor/hooks';
-import { FileContentAggregationActions, SortEnum } from '@/features/editor/types';
+import { FileContentAggregationActions, FilterEnum, SortEnum } from '@/features/editor/types';
 import { Divider } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { GridColumnMenuContainer, GridColumnMenuProps } from '@mui/x-data-grid';
@@ -20,6 +20,7 @@ interface GridColumnMenuContainerProps extends GridColumnMenuProps {
   disabled: boolean;
   handleAggregation: (column: string, action: FileContentAggregationActions) => void;
   handleSort: (column: string, sort: SortEnum) => void;
+  handleFilter: (column: string, operator: FilterEnum) => void;
 }
 
 /**
@@ -42,6 +43,7 @@ export const EditorColumnMenu: React.FC<GridColumnMenuContainerProps> = ({
   disabled,
   handleAggregation,
   handleSort,
+  handleFilter,
   hideMenu,
   colDef,
   ...other
@@ -58,7 +60,10 @@ export const EditorColumnMenu: React.FC<GridColumnMenuContainerProps> = ({
         onSort={(sort: SortEnum) => handleSort(colDef.field, sort)}
       ></EditorColumnMenuSortItem>
       <Divider />
-      <EditorColumnMenuFilterItem />
+      <EditorColumnMenuFilterItem 
+        onClick={hideMenu}
+        onFilter={(operator: FilterEnum) => handleFilter(colDef.field, operator)}
+      />
       <Divider />
       <EditorColumnMenuAggregationItem
         initialValue={aggregationActiveAction}
