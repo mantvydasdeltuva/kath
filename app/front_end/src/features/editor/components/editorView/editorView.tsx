@@ -152,8 +152,6 @@ export const EditorView: React.FC = () => {
   };
 
   const handleFilter = async (column: string, operator: FilterEnum, value: string) => {
-    // TODO Implement filter reset
-
     fileStateUpdate(undefined, { ...fileContent, filters: { [column]: { operator, value } } }, undefined);
   }
 
