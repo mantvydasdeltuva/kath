@@ -13,3 +13,4 @@ export { FileTypes } from './models/fileModel';
 export type { FileModel } from './models/fileModel';
 export type { FilePaginationModel } from './models/filePaginationModel';
 export { FilterEnum } from './enums/filterEnum';
+export type { FileContentFilterModel } from './models/fileContentFilterModel';

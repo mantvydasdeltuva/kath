@@ -32,7 +32,7 @@ export interface WorkspaceContextProps {
 export const WorkspaceContext = createContext<WorkspaceContextProps>({
   // File state defaults
   file: { id: '', label: '', type: FileTypes.FOLDER },
-  fileContent: { columns: [], rows: [], aggregations: {}, sorts: {} },
+  fileContent: { columns: [], rows: [], aggregations: {}, sorts: {}, filters: {} },
   filePagination: { page: 0, rowsPerPage: 100, totalRows: 0 },
   fileStateReset: () => {},
   fileStateUpdate: () => {},
@@ -106,6 +106,7 @@ export const WorkspaceContextProvider: React.FC<Props> = ({ children }) => {
     rows: [],
     aggregations: {},
     sorts: {},
+    filters: {},
   });
   const [filePagination, setFilePagination] = useState<FilePaginationModel>({
     page: 0,
@@ -121,7 +122,7 @@ export const WorkspaceContextProvider: React.FC<Props> = ({ children }) => {
 
   const fileStateReset = useCallback(() => {
     setFile({ id: '', label: '', type: FileTypes.FOLDER });
-    setFileContent({ columns: [], rows: [], aggregations: {}, sorts: {} });
+    setFileContent({ columns: [], rows: [], aggregations: {}, sorts: {}, filters: {} });
     setFilePagination({ page: 0, rowsPerPage: 100, totalRows: 0 });
   }, []);
 

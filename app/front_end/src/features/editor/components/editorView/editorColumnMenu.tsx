@@ -20,7 +20,7 @@ interface GridColumnMenuContainerProps extends GridColumnMenuProps {
   disabled: boolean;
   handleAggregation: (column: string, action: FileContentAggregationActions) => void;
   handleSort: (column: string, sort: SortEnum) => void;
-  handleFilter: (column: string, operator: FilterEnum) => void;
+  handleFilter: (column: string, operator: FilterEnum, value: string) => void;
 }
 
 /**
@@ -52,6 +52,8 @@ export const EditorColumnMenu: React.FC<GridColumnMenuContainerProps> = ({
   const aggregationActiveAction = fileContent.aggregations[colDef.field]
     ? fileContent.aggregations[colDef.field].action
     : FileContentAggregationActions.NONE;
+  const filterActiveOperator = fileContent.filters[colDef.field] ? fileContent.filters[colDef.field].operator : FilterEnum.CONTAINS;
+  const filterActiveValue = fileContent.filters[colDef.field] ? fileContent.filters[colDef.field].value : '';
 
   return !disabled ? (
     <StyledGridColumnMenuContainer hideMenu={hideMenu} colDef={colDef} {...other}>
@@ -60,9 +62,11 @@ export const EditorColumnMenu: React.FC<GridColumnMenuContainerProps> = ({
         onSort={(sort: SortEnum) => handleSort(colDef.field, sort)}
       ></EditorColumnMenuSortItem>
       <Divider />
-      <EditorColumnMenuFilterItem 
+      <EditorColumnMenuFilterItem
+        initialOperator={filterActiveOperator}
+        initialValue={filterActiveValue}
         onClick={hideMenu}
-        onFilter={(operator: FilterEnum) => handleFilter(colDef.field, operator)}
+        onFilter={(operator: FilterEnum, value: string) => handleFilter(colDef.field, operator, value)}
       />
       <Divider />
       <EditorColumnMenuAggregationItem
