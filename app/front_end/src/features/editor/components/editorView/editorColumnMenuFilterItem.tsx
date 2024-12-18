@@ -1,4 +1,4 @@
-import { FilterAlt as FilterAltIcon } from '@mui/icons-material';
+import { FilterAlt as FilterAltIcon, FilterAltOff as FilterAltOffIcon } from '@mui/icons-material';
 import { Box, Button, FormControl, InputLabel, MenuItem, OutlinedInput, Select, SelectChangeEvent, Typography, useTheme } from '@mui/material';
 import { FilterEnum } from '@/features/editor/types';
 import { useState, MouseEvent as MouseEventReact } from 'react';
@@ -30,6 +30,10 @@ export const EditorColumnMenuFilterItem: React.FC<EditorColumnMenuFilterItemProp
     onFilter(operator, value);
   }
 
+  const handleClearClick = (event: MouseEventReact<HTMLButtonElement, MouseEvent>) => {
+    onClick(event);
+  }
+
   return (
     <Box
       sx={{
@@ -56,7 +60,7 @@ export const EditorColumnMenuFilterItem: React.FC<EditorColumnMenuFilterItemProp
                 pr: '0.5rem',
               }}
             >
-              <Typography>Operator</Typography>
+              <Typography>Filter Operator</Typography>
             </Box>
           </InputLabel>
           <Select
@@ -103,7 +107,7 @@ export const EditorColumnMenuFilterItem: React.FC<EditorColumnMenuFilterItemProp
                 pr: '0.5rem',
               }}
             >
-              <Typography>Value</Typography>
+              <Typography>Filter Value</Typography>
             </Box>
           </InputLabel>
           <OutlinedInput
@@ -134,6 +138,15 @@ export const EditorColumnMenuFilterItem: React.FC<EditorColumnMenuFilterItemProp
         <Box sx={{ display: 'flex', flexDirection: 'row', gap: '1rem', alignItems: 'center' }}>
           <FilterAltIcon sx={{ color: Theme.palette.text.secondary }} />
           <Typography>Filter</Typography>
+        </Box>
+      </Button>
+      <Button
+        onClick={handleClearClick}
+        sx={{ justifyContent: 'left', px: '0.85rem', borderRadius: '0' }}
+      >
+        <Box sx={{ display: 'flex', flexDirection: 'row', gap: '1rem', alignItems: 'center' }}>
+          <FilterAltOffIcon sx={{ color: Theme.palette.text.secondary }} />
+          <Typography>Clear filter</Typography>
         </Box>
       </Button>
     </Box>
