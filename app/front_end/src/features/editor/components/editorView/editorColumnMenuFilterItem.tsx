@@ -102,7 +102,7 @@ export const EditorColumnMenuFilterItem: React.FC<EditorColumnMenuFilterItemProp
           </Select>
         </FormControl>
         <FormControl fullWidth size='small'>
-          <InputLabel>
+          <InputLabel shrink>
             <Box 
               sx={{
                 bgcolor: Theme.palette.background.default,
@@ -113,6 +113,7 @@ export const EditorColumnMenuFilterItem: React.FC<EditorColumnMenuFilterItemProp
             </Box>
           </InputLabel>
           <OutlinedInput
+            notched
             id='filter-value'
             label="Value"
             value={value}
