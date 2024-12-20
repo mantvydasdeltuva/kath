@@ -603,8 +603,6 @@ def put_workspace_file(relative_path):
     rows_per_page = data.get("rowsPerPage")
     header = data.get("header")
     rows = data.get("rows")
-    sort = literal_eval(request.args.get("sorts"))
-    copy_file_path = file_path
 
     start_row = page * rows_per_page
     end_row = start_row + rows_per_page
@@ -619,54 +617,56 @@ def put_workspace_file(relative_path):
         # Ensure the directory exists
         os.makedirs(os.path.dirname(file_path), exist_ok=True)
 
-        if sort:
-            sort_key, sort_order = list(sort.items())[0]
-            copy_file_path = f"{file_path}.{sort_key}.{sort_order}.sort"
-
-        # Costly operation to read the entire file and update the required rows.
-        # One full file cycle.
-        # Currently supports CSV files only.
+        # Specific index file
+        file_path_index = f"{file_path}.index"
 
         # Create a temporary file to write updated content
         temp_file_path = f"{file_path}.tmp"
 
         # Read the file and write the updated rows
-        with open(copy_file_path, "r", encoding="utf-8") as infile, open(
+        with open(
+            file_path, "r", encoding="utf-8"
+        ) as original, open(
+            file_path_index, "r", encoding="utf-8"
+        ) as index, open(
             temp_file_path, "w", encoding="utf-8"
         ) as outfile:
-            reader = csv.reader(infile)
+
+            # Original file reader
+            reader = csv.reader(original)
+            # Updated file writer
             writer = csv.writer(outfile)
+            # Index file context
+            line = index.readline()
+            if line != '':
+                org_line, rows_line = map(int, line.split(" "))
+            else:
+                org_line = 0
+                rows_line = 0
 
-            # Skip the header
-            next(reader)
-            writer.writerow(header)  # Write the new header
+            # Read all original rows
+            for idx, row in enumerate(reader):
+                # Header
+                if (idx == 0):
+                    writer.writerow(header)
+                    continue
 
-            for i, row in enumerate(reader):
-                if start_row <= i < end_row:
-                    writer.writerow(rows[i - start_row])  # Write the updated row
-                else:
-                    writer.writerow(row)  # Write the existing row
-                if i <= end_row:
-                    total_rows += 1
+                # Write new content
+                if (idx == org_line):
+                    writer.writerow(rows[rows_line-1])
+                    line = index.readline()
+                    if line != '':
+                        org_line, rows_line = map(int, line.split(" "))
+                    else:
+                        org_line = 0
+                        rows_line = 0
+                    continue
+
+                # Write old content 
+                writer.writerow(row)
 
         # Replace the old file with the new file
         os.replace(temp_file_path, file_path)
-
-        # Check if outdated files exists
-        existing_files = [
-            f
-            for f in os.listdir(os.path.dirname(file_path))
-            if f.startswith(os.path.basename(file_path))
-            and (
-                not f.endswith(".csv")
-                and not f.endswith(".txt")
-                and not os.path.isdir(os.path.join(os.path.dirname(file_path), f))
-            )
-        ]
-
-        # Remove old files
-        for file_name in existing_files:
-            os.remove(os.path.join(os.path.dirname(file_path), file_name))
 
         # Emit a feedback to the user's console
         socketio_emit_to_user_session(
