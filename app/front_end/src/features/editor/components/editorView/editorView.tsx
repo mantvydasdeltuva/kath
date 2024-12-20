@@ -87,6 +87,7 @@ export const EditorView: React.FC = () => {
       await axios.put<FileDataResponseDTO>(`${Endpoints.WORKSPACE_FILE}/${file.id}`, data, {
         params: {
           sorts: JSON.stringify(fileContent.sorts),
+          filters: JSON.stringify(fileContent.filters),
         },
       });
 
@@ -177,7 +178,7 @@ export const EditorView: React.FC = () => {
           page: filePagination.page,
           rowsPerPage: filePagination.rowsPerPage,
           sorts: JSON.stringify(fileContent.sorts),
-          // TODO Implement filters params to backend
+          filters: JSON.stringify(fileContent.filters),
         },
       });
 
