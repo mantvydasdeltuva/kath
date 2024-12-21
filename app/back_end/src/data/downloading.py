@@ -202,6 +202,8 @@ def download_selected_database_for_eys_gene(database_name:str, save_path:str="",
         save_path = STORE_AS_LOVD
     elif database_name == "gnomad" and save_path == "":
         save_path = STORE_AS_GNOMAD
+    elif database_name == "clinvar" and save_path == "":
+        save_path = STORE_AS_CLINVAR
 
     # check if database_name is supported
     if database_name not in DATABASES_DOWNLOAD_PATHS:
@@ -213,6 +215,9 @@ def download_selected_database_for_eys_gene(database_name:str, save_path:str="",
         parse_lovd(save_path, save_path[:-4])
     elif database_name == "gnomad":
         download_data_from_gnomad_eys(save_path, override)
+    elif database_name == "clinvar": 
+        download_clinvar_database_for_eys_gene(save_path, override)
+        # TODO parse clinvar data to extract only relevant information
     else:
         raise IndexError(f"Requested for {database_name} is not yet supported")
 
