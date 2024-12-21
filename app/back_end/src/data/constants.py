@@ -9,6 +9,7 @@ LOVD_FILE_URL = "https://databases.lovd.nl/shared/download/all/gene/"
 LOVD_FILE_URL_EYS = LOVD_FILE_URL + "EYS"
 STORE_AS_LOVD = "../app/back_end/src/workspace/lovd/lovd_data.txt"
 STORE_AS_GNOMAD = "../app/back_end/src/workspace/gnomad/gnomad_data.csv"
+STORE_AS_CLINVAR = "../app/back_end/src/workspace/clinvar/clinvar_data.csv"
 
 GNOMAD_URL = "https://gnomad.broadinstitute.org/gene"
 GNOMAD_URL_EYS = "https://gnomad.broadinstitute.org/gene/ENSG00000188107?dataset=gnomad_r4"
