@@ -6,7 +6,9 @@ import re
 
 
 import pandas as pd
+import xml.etree.ElementTree as ET
 from pandas import DataFrame
+from datetime import datetime
 
 from pyliftover import LiftOver
 
@@ -347,3 +349,107 @@ def find_popmax_in_gnomad(data:pd.DataFrame):
                 max_id = population_id
         data.loc[i, 'Popmax'] = max_pop
         data.loc[i, 'Popmax population'] = population_mapping[max_id]
+
+def parse_clinvar(rows: list[list[str]], variation_archives: list[ET.Element]):
+    # Parse variation archives
+    for element in variation_archives:
+        row = []
+
+        # Name
+        name = element.attrib.get("VariationName")
+        row.append(name if name is not None else "")
+
+        # Gene(s)
+        genes = [
+            inner.attrib.get("Symbol")
+            for inner in element.findall("ClassifiedRecord/SimpleAllele/GeneList/Gene")
+            if inner.attrib.get("Symbol") is not None
+        ]
+        row.append("|".join(genes) if genes else "")
+
+        # Protein change
+        proteins = [
+            inner.text
+            for inner in element.findall("ClassifiedRecord/SimpleAllele/ProteinChange")
+            if inner.text is not None
+        ]
+        row.append(", ".join(proteins) if proteins else "")
+
+        # Condition(s)
+        germline_classification = element.find("ClassifiedRecord/Classifications/GermlineClassification")
+        conditions = [
+            inner.text
+            for inner in germline_classification.findall("ConditionList/TraitSet/Trait/Name/ElementValue[@Type='Preferred']")
+            if inner.text is not None
+        ]
+        row.append("|".join(conditions) if conditions else "")
+
+        # Accession
+        accession = element.attrib.get("Accession")
+        row.append(accession if accession is not None else "")
+
+        # GRCh37Chromosome
+        grch37_sequence_location = element.find("ClassifiedRecord/SimpleAllele/Location/SequenceLocation[@Assembly='GRCh37']")
+        grch37_chromosome = grch37_sequence_location.attrib.get("Chr") if grch37_sequence_location is not None else None
+        row.append(grch37_chromosome if grch37_chromosome is not None else "")
+
+        # GRCh37Location
+        grch37_start = grch37_sequence_location.attrib.get("display_start") if grch37_sequence_location is not None else None
+        grch37_end = grch37_sequence_location.attrib.get("display_stop") if grch37_sequence_location is not None else None
+        row.append(f"{grch37_start} - {grch37_end}" if grch37_start is not None and grch37_end is not None and grch37_start != grch37_end else grch37_start if grch37_start is not None else "")
+
+        # GRCh38Chromosome
+        grch38_sequence_location = element.find("ClassifiedRecord/SimpleAllele/Location/SequenceLocation[@Assembly='GRCh38']")
+        grch38_chromosome = grch38_sequence_location.attrib.get("Chr") if grch38_sequence_location is not None else None
+        row.append(grch38_chromosome if grch38_chromosome is not None else "")
+
+        # GRCh38Location
+        grch38_start = grch38_sequence_location.attrib.get("display_start") if grch38_sequence_location is not None else None
+        grch38_end = grch38_sequence_location.attrib.get("display_stop") if grch38_sequence_location is not None else None
+        row.append(f"{grch38_start} - {grch38_end}" if grch38_start is not None and grch38_end is not None and grch38_start != grch38_end else grch38_start if grch38_start is not None else "")
+
+        # VariationID
+        variation_id = element.attrib.get('VariationID')
+        row.append(variation_id if variation_id is not None else "")
+
+        # AlleleID(s)
+        simple_allele = element.find("ClassifiedRecord/SimpleAllele")
+        allele_id = simple_allele.attrib.get("AlleleID") if simple_allele is not None else None
+        row.append(allele_id if allele_id is not None else "")
+
+        # dbSNP ID
+        xrefs = element.findall('ClassifiedRecord/SimpleAllele/XRefList/XRef')
+        xref = next((inner for inner in xrefs if inner.attrib.get("DB") == "dbSNP"), None)
+        row.append(f"{xref.attrib.get("Type")}{xref.attrib.get("ID")}" if xref is not None else "")
+
+        # Canonical SPDI
+        canonical_spdi = element.find('ClassifiedRecord/SimpleAllele/CanonicalSPDI')
+        row.append(canonical_spdi.text if canonical_spdi is not None else "")
+
+        # Variant type
+        variant_type = element.find('ClassifiedRecord/SimpleAllele/VariantType')
+        row.append(variant_type.text if variant_type is not None else "")
+
+        # Molecular consequence
+        molecular_consequences = [
+            inner.attrib.get("Type")
+            for inner in element.findall("ClassifiedRecord/SimpleAllele/HGVSlist/HGVS[@Type='coding']/MolecularConsequence")
+            if inner.attrib.get("Type") is not None
+        ]
+        molecular_consequences = list(set(molecular_consequences))
+        row.append("|".join(molecular_consequences) if molecular_consequences else "")
+
+        # Germline classification
+        description = germline_classification.find("Description") if germline_classification is not None else None
+        row.append(description.text if description is not None else "")
+
+        # Germline review status
+        review_status = germline_classification.find("ReviewStatus") if germline_classification is not None else None
+        row.append(review_status.text if review_status is not None else "")
+
+        # Germline date last evaluated
+        date_last_evaluated = germline_classification.attrib.get("DateLastEvaluated") if germline_classification is not None else None
+        row.append(datetime.strptime(date_last_evaluated, "%Y-%m-%d").strftime("%b %d, %Y") if date_last_evaluated is not None else "")
+
+        # Append row to rows
+        rows.append(row)
