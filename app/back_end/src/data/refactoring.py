@@ -409,7 +409,7 @@ def parse_clinvar(rows: list[list[str]], variation_archives: list[ET.Element]):
         row.append(f"{grch38_start} - {grch38_end}" if grch38_start is not None and grch38_end is not None and grch38_start != grch38_end else grch38_start if grch38_start is not None else "")
 
         # VariationID
-        variation_id = element.attrib.get('VariationID')
+        variation_id = element.attrib.get("VariationID")
         row.append(variation_id if variation_id is not None else "")
 
         # AlleleID(s)
@@ -418,16 +418,16 @@ def parse_clinvar(rows: list[list[str]], variation_archives: list[ET.Element]):
         row.append(allele_id if allele_id is not None else "")
 
         # dbSNP ID
-        xrefs = element.findall('ClassifiedRecord/SimpleAllele/XRefList/XRef')
+        xrefs = element.findall("ClassifiedRecord/SimpleAllele/XRefList/XRef")
         xref = next((inner for inner in xrefs if inner.attrib.get("DB") == "dbSNP"), None)
-        row.append(f"{xref.attrib.get("Type")}{xref.attrib.get("ID")}" if xref is not None else "")
+        row.append(f"{xref.attrib.get('Type')}{xref.attrib.get('ID')}" if xref is not None else "")
 
         # Canonical SPDI
-        canonical_spdi = element.find('ClassifiedRecord/SimpleAllele/CanonicalSPDI')
+        canonical_spdi = element.find("ClassifiedRecord/SimpleAllele/CanonicalSPDI")
         row.append(canonical_spdi.text if canonical_spdi is not None else "")
 
         # Variant type
-        variant_type = element.find('ClassifiedRecord/SimpleAllele/VariantType')
+        variant_type = element.find("ClassifiedRecord/SimpleAllele/VariantType")
         row.append(variant_type.text if variant_type is not None else "")
 
         # Molecular consequence
