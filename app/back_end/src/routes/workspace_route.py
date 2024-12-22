@@ -418,7 +418,7 @@ def get_workspace_file(relative_path):
                 indexes.append(idx)
 
         # Apply sort
-        if sort:
+        if sort and rows:
             filter_index = header.index(sort_key)
 
             # Detect if the column is numeric or string by examining the first valid value
