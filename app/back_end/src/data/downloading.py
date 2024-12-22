@@ -7,6 +7,7 @@ import time
 
 import requests
 import pandas as pd
+import xml.etree.ElementTree as ET
 from pandas.core.interchange.dataframe_protocol import DataFrame
 from requests import RequestException
 
@@ -20,9 +21,13 @@ from .constants import (LOVD_FILE_URL,
                         DATABASES_DOWNLOAD_PATHS,
                         LOVD_FILE_URL_EYS,
                         STORE_AS_LOVD,
-                        STORE_AS_GNOMAD)
-from .refactoring import parse_lovd
-
+                        STORE_AS_GNOMAD,
+                        STORE_AS_CLINVAR)
+from .refactoring import (parse_lovd,
+                        parse_clinvar)
+from .helpers import (construct_clinvar_gene_identifiers_url,
+                      contruct_clinvar_summaries_url,
+                      write_to_csv)
 
 # EXCEPTIONS
 class BadResponseException(Exception):
@@ -197,6 +202,8 @@ def download_selected_database_for_eys_gene(database_name:str, save_path:str="",
         save_path = STORE_AS_LOVD
     elif database_name == "gnomad" and save_path == "":
         save_path = STORE_AS_GNOMAD
+    elif database_name == "clinvar" and save_path == "":
+        save_path = STORE_AS_CLINVAR
 
     # check if database_name is supported
     if database_name not in DATABASES_DOWNLOAD_PATHS:
@@ -208,6 +215,9 @@ def download_selected_database_for_eys_gene(database_name:str, save_path:str="",
         parse_lovd(save_path, save_path[:-4])
     elif database_name == "gnomad":
         download_data_from_gnomad_eys(save_path, override)
+    elif database_name == "clinvar": 
+        download_clinvar_database_for_eys_gene(save_path, override)
+        # TODO parse clinvar data to extract only relevant information
     else:
         raise IndexError(f"Requested for {database_name} is not yet supported")
 
@@ -370,3 +380,70 @@ def download_data_from_gnomad_eys(path:str=STORE_AS_GNOMAD, override:bool=False)
 
     if not os.path.isfile(path) or override:
         df.to_csv(path, index=False)
+
+
+def download_clinvar_database_for_eys_gene(save_to:str = STORE_AS_CLINVAR, override:bool=False):
+    """
+    Gets file from url and saves it into provided path. Overrides, if override is True.
+
+    :param str save_to: path to save (default: 'clinvar/clinvar_data.csv')
+    :param bool override: needs override
+    """
+
+    # check if directory exists, if not - create
+    save_to_dir = os.path.dirname(save_to)
+    if not os.path.exists(save_to_dir):
+        os.makedirs(save_to_dir)
+
+    # check if file exist and needs to override
+    if os.path.exists(save_to) and not override:
+        print(f"The file at {save_to} already exists.")
+        return
+
+    # Download identifiers for the gene EYS
+    url = construct_clinvar_gene_identifiers_url(gene = "EYS", max = 5000)
+
+    try:
+        response = requests.get(url, timeout=10)
+    except RequestException as e:
+        raise DownloadError(f"Error while downloading file from {url}") from e
+
+    if response.status_code != 200:
+        raise BadResponseException(f"Bad response from {url}."
+                                   f" Status code: {response.status_code}")
+
+    # Parse identifiers XML
+    root = ET.fromstring(response.text)
+    identifiers = [element.text for element in root.findall('IdList/Id')]
+
+    # Define columns and rows
+    columns = [
+        "Name", "Gene(s)", "Protein change", "Condition(s)", "Accession",
+        "GRCh37Chromosome", "GRCh37Location", "GRCh38Chromosome",
+        "GRCh38Location", "VariationID", "AlleleID(s)", "dbSNP ID","Canonical SPDI",
+        "Variant type", "Molecular consequence", "Germline classification",
+        "Germline review status","Germline date last evaluated"
+    ]
+    rows = []
+
+    BATCH_SIZE: int = 500
+    # Download summaries for the identifiers in batches
+    for i in range (0, len(identifiers), BATCH_SIZE):
+        batch = identifiers[i:i + BATCH_SIZE]
+        url = contruct_clinvar_summaries_url(identifiers = batch)
+        try:
+            response = requests.get(url, timeout=10)
+        except RequestException as e:
+            raise DownloadError(f"Error while downloading file from {url}") from e
+
+        if response.status_code != 200:
+            raise BadResponseException(f"Bad response from {url}."
+                                        f" Status code: {response.status_code}")
+        
+        # Parse summaries XML
+        root = ET.fromstring(response.text)
+        variation_archives = root.findall("VariationArchive")
+        parse_clinvar(rows, variation_archives) 
+
+    # Write the data to a CSV file
+    write_to_csv(columns, rows, save_to)
