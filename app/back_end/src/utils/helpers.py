@@ -153,3 +153,17 @@ def convert_to_number(value):
         return float(value)
     except ValueError:
         return value
+
+def generate_filter_suffix(filter):
+    if filter:
+        filter_key, filter_info = list(filter.items())[0]
+        filter_operator = filter_info.get("operator")
+        filter_value = filter_info.get("value")
+        return f".filter.{filter_key}.{filter_operator}.{filter_value}"
+    return ".filter"
+
+def generate_sort_suffix(sort):
+    if sort:
+        sort_key, sort_order = list(sort.items())[0]
+        return f".sort.{sort_key}.{sort_order}"
+    return ".sort"

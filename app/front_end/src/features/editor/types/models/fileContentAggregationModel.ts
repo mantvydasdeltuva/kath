@@ -2,7 +2,7 @@
  * `FileContentAggregationActions` enum defines the actions that can be used to aggregate the content of a file.
  */
 export enum FileContentAggregationActions {
-  NONE = '',
+  NONE = 'none',
   SUM = 'sum',
   AVG = 'avg',
   MIN = 'min',
