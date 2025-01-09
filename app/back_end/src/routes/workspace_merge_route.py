@@ -24,9 +24,12 @@ from ..constants import (
 from ..data.refactoring import (
     set_lovd_dtypes,
     set_gnomad_dtypes,
+    set_clinvar_dtypes,
     parse_lovd,
     parse_gnomad,
+    parse_clinvar,
     merge_gnomad_lovd,
+    merge_lovd_clinvar, transform_spdi_to_format
 )
 
 workspace_merge_route_bp = Blueprint("workspace_merge_route", __name__)
@@ -289,13 +292,48 @@ def get_workspace_merge_lovd_clinvar(relative_path):
             sid,
         )
 
-        #
-        # TODO: Implement LOVD and ClinVar data merge and save logic using defined parameters
-        # [destination_path, override, lovd_file, clinvar_file]
-        #
+        if not os.path.exists(lovd_file):
+            raise FileNotFoundError(f"LOVD data file not found at: {lovd_file}")
 
-        # TODO: Remove this sleep statement once the merge logic is implemented
-        time.sleep(1)  # Simulate a delay for the merge process
+        if not os.path.exists(clinvar_file):
+            raise FileNotFoundError(f"ClinVar data file not found at: {clinvar_file}")
+
+        # Load existing data if the destination file exists
+        existing_data = pd.DataFrame()
+        if os.path.exists(destination_path):
+            if override:
+                os.remove(destination_path)  # Remove file if overriding
+            else:
+                existing_data = pd.read_csv(destination_path)
+
+        lovd_data = parse_lovd(lovd_file)
+        clinvar_data = parse_clinvar(clinvar_file)
+
+        set_lovd_dtypes(lovd_data)
+        set_clinvar_dtypes(clinvar_data)
+
+        variants_on_genome = lovd_data["Variants_On_Genome"].copy()
+
+        lovd_data = pd.merge(
+            lovd_data["Variants_On_Transcripts"],
+            variants_on_genome[
+                ["id", "VariantOnGenome/DNA", "VariantOnGenome/DNA/hg38"]
+            ],
+            on="id",
+            how="left",
+        )
+        clinvar_data=transform_spdi_to_format(clinvar_data)
+        final_data = merge_lovd_clinvar(lovd_data, clinvar_data)
+
+        # Append existing data if we're not overriding
+        if not existing_data.empty:
+            final_data = pd.concat([existing_data, final_data], ignore_index=True)
+
+        try:
+            final_data.to_csv(destination_path, index=False)
+        except OSError as e:
+            raise RuntimeError(f"Error saving file: {e}")
+
 
         # Emit a feedback to the user's console
         socketio_emit_to_user_session(

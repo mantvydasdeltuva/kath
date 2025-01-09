@@ -10,7 +10,7 @@ from pandas import DataFrame
 
 from pyliftover import LiftOver
 
-from .constants import LOVD_PATH, GNOMAD_PATH
+from .constants import LOVD_PATH, GNOMAD_PATH, CLINVAR_PATH
 
 
 def set_lovd_dtypes(df_dict: dict[str, pd.DataFrame]):
@@ -27,6 +27,7 @@ def set_lovd_dtypes(df_dict: dict[str, pd.DataFrame]):
             raise Exception(f"Failed to convert data types for LOVD table '{table_name}': {e}") from e
         df_dict[table_name] = frame
 
+
 def set_gnomad_dtypes(df:pd.DataFrame):
     """
     Convert data from gnomAD format table to desired data format based on specified data types.
@@ -38,6 +39,19 @@ def set_gnomad_dtypes(df:pd.DataFrame):
         df.convert_dtypes()
     except Exception as e:
         raise Exception(f"Failed to convert gnomAD data types: {e}") from e
+
+
+def set_clinvar_dtypes(df:pd.DataFrame):
+    """
+    Convert data from ClinVar format table to desired data format based on specified data types.
+
+    :param DataFrame df: DataFrame containing Clinvar data
+    :raises ClinVarDtypeConversionError: if there is an error during data type conversion
+    """
+    try:
+        df.convert_dtypes()
+    except Exception as e:
+        raise Exception(f"Failed to convert Clinvar data types: {e}") from e
 
 
 def infer_type(value:str):
@@ -61,7 +75,7 @@ def infer_type(value:str):
         return value  # Return as string if it cannot be converted
 
 
-def parse_lovd(path: str = LOVD_PATH + '/lovd_data.txt', save_to: str = LOVD_PATH):
+def parse_lovd(path:str=LOVD_PATH + '/lovd_data.txt'):
     """
     Converts data from text file with LOVD format to dictionary of tables.
 
@@ -123,11 +137,6 @@ def parse_lovd(path: str = LOVD_PATH + '/lovd_data.txt', save_to: str = LOVD_PAT
 
             d[table_name] = frame
 
-            file_location = os.path.join(save_to, f"{table_name}.csv")
-            if not os.path.exists(save_to):
-                os.makedirs(save_to)
-            frame.to_csv(file_location, index=False)
-
             # skip inter tables lines
             [f.readline() for _ in range(1)]  # pylint: disable=expression-not-assigned
 
@@ -152,6 +161,26 @@ def parse_gnomad(path:str=GNOMAD_PATH + '/gnomad_data.csv'):
         return gnomad_data
     except Exception as e:
         logging.error("Error parsing gnomAD data: %s", str(e))
+        raise e
+
+
+def parse_clinvar(path:str=CLINVAR_PATH + '/clinvar_data.csv'):
+    """
+    Parses data from a ClinVar format text file into a pandas DataFrame.
+
+    :param str path: path to the ClinVar data file
+    :returns: pandas DataFrame containing ClinVar data
+    :rtype: pd.DataFrame
+    """
+
+    if not os.path.exists(path):
+        raise FileNotFoundError(f"The file at {path} does not exist.")
+    logging.info("Parsing file %s using parse_clinvar.", path)
+    try:
+        clinvar_data = pd.read_csv(path, sep=',', encoding='UTF-8')
+        return clinvar_data
+    except Exception as e:
+        logging.error("Error parsing ClinVar data: %s", str(e))
         raise e
 
 
@@ -275,7 +304,10 @@ def merge_gnomad_lovd(lovd:pd.DataFrame, gnomad:pd.DataFrame):
     """
 
     lovd_fill_hg38(lovd)
-    gnomad.columns = [col + '_gnomad' for col in gnomad.columns]
+    gnomad.columns = [
+        col + '_gnomad' if not col.endswith('_gnomad') else col
+        for col in gnomad.columns
+    ]
 
     merged_frame = pd.merge(
         lovd,
@@ -285,6 +317,34 @@ def merge_gnomad_lovd(lovd:pd.DataFrame, gnomad:pd.DataFrame):
         right_on="variant_id_gnomad"
     )
 
+    return merged_frame
+
+
+def merge_lovd_clinvar(lovd:pd.DataFrame, clinvar:pd.DataFrame):
+    """
+    Merge LOVD and clinvar dataframes on genomic positions.
+
+    Parameters:
+    lovd : pd.DataFrame
+        LOVD dataframe.
+    clinvar : pd.DataFrame
+        clinvar dataframe.
+
+    Returns:
+    pd.DataFrame
+        Merged dataframe with combined information from LOVD and clinvar.
+    """
+
+    lovd_fill_hg38(lovd)
+    clinvar.columns = [col + '_clinvar' for col in clinvar.columns]
+
+    merged_frame = pd.merge(
+        lovd,
+        clinvar,
+        how="outer",
+        left_on="hg38_gnomad_format",
+        right_on="hg38_ID_clinvar"
+    )
     return merged_frame
 
 
@@ -347,3 +407,47 @@ def find_popmax_in_gnomad(data:pd.DataFrame):
                 max_id = population_id
         data.loc[i, 'Popmax'] = max_pop
         data.loc[i, 'Popmax population'] = population_mapping[max_id]
+
+
+def transform_spdi_to_format(df, spdi_column="Canonical SPDI", new_column="hg38_ID")->pd.DataFrame:
+    """
+    Transforms the SPDI format in a given column to the desired format.
+
+    Args:
+        df (pd.DataFrame): The DataFrame containing the SPDI column.
+        spdi_column (str): The name of the column with SPDI format.
+        new_column (str): The name of the new column to add with the formatted data.
+
+    Returns:
+        pd.DataFrame: The updated DataFrame with the new column.
+    """
+    df[spdi_column] = df[spdi_column].astype(str)
+    df[new_column] = df[spdi_column].apply(format_spdi)
+    return df
+
+
+def format_spdi(row) -> str | None:
+    """
+    Formats a given SPDI (Sequence, Position, Deletion, Insertion) string into a standardized format.
+    The function expects the input string in the form of "chromosome:position:ref:alt",
+    where:
+     - chromosome is the chromosome identifier, potentially prefixed with "NC_" and containing a version number (e.g., "NC_000001.11").
+     - position is the position of the mutation on the chromosome.
+     - ref is the reference nucleotide.
+     - alt is the alternate nucleotide.
+
+    The function processes the chromosome by removing the "NC_" prefix and any version number after the dot,
+    and strips any leading zeroes. It then returns the string formatted as "chromosome-position-ref-alt".
+
+    If the input string is not properly formatted or cannot be split into the four expected components, the function returns None.
+
+    params: row (str): A string representing the SPDI, formatted as "chromosome:position:ref:alt".
+
+    returns (str or None): A formatted string in the form "chromosome-position-ref-alt", or None if the input is invalid.
+    """
+    try:
+        chromosome, position, ref, alt = row.split(":")
+        chromosome = chromosome.replace("NC_", "").split(".")[0].lstrip("0")
+        return f"{chromosome}-{position}-{ref}-{alt}"
+    except ValueError:
+        return None
