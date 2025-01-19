@@ -1,4 +1,4 @@
-import { SettingsDialog, ShortcutsDialog } from '@/components/dialogs';
+import { FeedbackDialog, SettingsDialog, ShortcutsDialog } from '@/components/dialogs';
 import { Sidebar } from '@/components/sidebar';
 import { Colors } from '@/types';
 import { Box, Typography, useTheme } from '@mui/material';
@@ -41,6 +41,14 @@ export const BaseLayout: React.FC<Props> = ({ children }) => {
   };
   const handleSettingsDialogClose = () => {
     setIsSettingsDialogOpen(false);
+  };
+
+  const [isFeedbackDialogOpen, setIsFeedbackDialogOpen] = useState(false);
+  const handleFeedbackDialogOpen = () => {
+    setIsFeedbackDialogOpen(true);
+  };
+  const handleFeedbackDialogClose = () => {
+    setIsFeedbackDialogOpen(false);
   };
 
   return (
@@ -109,7 +117,11 @@ export const BaseLayout: React.FC<Props> = ({ children }) => {
           flexDirection: 'row',
         }}
       >
-        <Sidebar settingsDialogOpen={handleSettingsDialogOpen} shortcutsDialogOpen={handleShortcutsDialogOpen} />
+        <Sidebar
+          settingsDialogOpen={handleSettingsDialogOpen}
+          shortcutsDialogOpen={handleShortcutsDialogOpen}
+          feedbackDialogOpen={handleFeedbackDialogOpen}
+        />
 
         <Box
           sx={{
@@ -123,6 +135,7 @@ export const BaseLayout: React.FC<Props> = ({ children }) => {
         </Box>
         <SettingsDialog open={isSettingsDialogOpen} onClose={handleSettingsDialogClose} />
         <ShortcutsDialog open={isShortcutsDialogOpen} onClose={handleShortcutsDialogClose} />
+        <FeedbackDialog open={isFeedbackDialogOpen} onClose={handleFeedbackDialogClose} />
       </Box>
     </Box>
   );

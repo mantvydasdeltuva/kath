@@ -2,6 +2,7 @@ import { IconTitleButton } from '@/components/buttons/IconTitleButton';
 import { Paths } from '@/types';
 import {
   AutoMode as AutoModeIcon,
+  ErrorOutline as BugReportIcon,
   Home as HomeIcon,
   SettingsOutlined as SettingsOutlinedIcon,
   SwitchAccessShortcut as SwitchAccessShortcutIcon,
@@ -12,9 +13,10 @@ import { useLocation, useNavigate } from 'react-router-dom';
 interface SidebarProps {
   settingsDialogOpen: () => void;
   shortcutsDialogOpen: () => void;
+  feedbackDialogOpen: () => void;
 }
 
-export const Sidebar: React.FC<SidebarProps> = ({ settingsDialogOpen, shortcutsDialogOpen }) => {
+export const Sidebar: React.FC<SidebarProps> = ({ settingsDialogOpen, shortcutsDialogOpen, feedbackDialogOpen }) => {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -77,6 +79,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ settingsDialogOpen, shortcutsD
         <IconTitleButton
           icon={<SwitchAccessShortcutIcon sx={{ width: '1.5rem', height: '1.5rem' }} />}
           onClick={shortcutsDialogOpen}
+        />
+        <IconTitleButton
+          icon={<BugReportIcon sx={{ width: '1.5rem', height: '1.5rem' }} />}
+          onClick={feedbackDialogOpen}
         />
       </Box>
     </Box>
