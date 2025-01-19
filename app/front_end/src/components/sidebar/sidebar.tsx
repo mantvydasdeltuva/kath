@@ -5,18 +5,16 @@ import {
   ErrorOutline as BugReportIcon,
   Home as HomeIcon,
   SettingsOutlined as SettingsOutlinedIcon,
-  SwitchAccessShortcut as SwitchAccessShortcutIcon,
 } from '@mui/icons-material';
 import { Box } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 interface SidebarProps {
   settingsDialogOpen: () => void;
-  shortcutsDialogOpen: () => void;
   feedbackDialogOpen: () => void;
 }
 
-export const Sidebar: React.FC<SidebarProps> = ({ settingsDialogOpen, shortcutsDialogOpen, feedbackDialogOpen }) => {
+export const Sidebar: React.FC<SidebarProps> = ({ settingsDialogOpen, feedbackDialogOpen }) => {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -75,10 +73,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ settingsDialogOpen, shortcutsD
         <IconTitleButton
           icon={<SettingsOutlinedIcon sx={{ width: '1.5rem', height: '1.5rem' }} />}
           onClick={settingsDialogOpen}
-        />
-        <IconTitleButton
-          icon={<SwitchAccessShortcutIcon sx={{ width: '1.5rem', height: '1.5rem' }} />}
-          onClick={shortcutsDialogOpen}
         />
         <IconTitleButton
           icon={<BugReportIcon sx={{ width: '1.5rem', height: '1.5rem' }} />}
