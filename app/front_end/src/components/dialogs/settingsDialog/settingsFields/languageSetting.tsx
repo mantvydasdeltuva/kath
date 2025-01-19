@@ -16,11 +16,7 @@ export const LanguageSetting = () => {
     <SettingsSelectField
       title='Language'
       description='Change the language of the application'
-      settings={[
-        { value: 'en', label: 'English' },
-        { value: 'lt', label: 'Lithuanian' },
-        { value: 'it', label: 'Italian' },
-      ]}
+      settings={[{ value: 'en', label: 'English' }]}
       value={switchLanguage}
       onChange={handleLanguageChange}
     />
