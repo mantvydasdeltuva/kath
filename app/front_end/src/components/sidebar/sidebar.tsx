@@ -1,7 +1,6 @@
 import { IconTitleButton } from '@/components/buttons/IconTitleButton';
 import { Paths } from '@/types';
 import {
-  AutoMode as AutoModeIcon,
   ErrorOutline as BugReportIcon,
   Home as HomeIcon,
   SettingsOutlined as SettingsOutlinedIcon,
@@ -44,7 +43,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ settingsDialogOpen, feedbackDi
           isActive={location.pathname === Paths.HOME}
           onClick={() => navigate(Paths.HOME)}
         />
-        <IconTitleButton
+        {/* <IconTitleButton
           icon={
             <AutoModeIcon
               sx={{
@@ -57,7 +56,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ settingsDialogOpen, feedbackDi
           isActive={location.pathname === Paths.MACROS}
           onClick={() => navigate(Paths.MACROS)}
           disabled
-        />
+        /> */}
       </Box>
       <Box
         sx={{
