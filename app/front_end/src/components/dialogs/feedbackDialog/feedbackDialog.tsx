@@ -72,7 +72,7 @@ export const FeedbackDialog = ({ open, onClose }: FeedbackDialogProps) => {
         </Grid>
       </Grid>
       <DialogContent sx={{ borderTop: `1px solid ${alpha(Theme.palette.text.secondary, 0.3)}` }}>
-        <Grid container display='flex' alignItems='center' pb='1rem' mt='-1rem' rowGap={2}>
+        <Grid container display='flex' alignItems='center' pb='1rem' mt='-0.5rem' rowGap={2.5}>
           <Grid item xs={12}>
             <Typography sx={{ fontWeight: '500', fontSize: '1rem', width: '100%' }}>
               Have any feedback, suggestions, or feature requests? We would love to hear from you! Email us at:
