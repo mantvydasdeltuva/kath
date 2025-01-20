@@ -1,20 +1,19 @@
 import { IconTitleButton } from '@/components/buttons/IconTitleButton';
 import { Paths } from '@/types';
 import {
-  AutoMode as AutoModeIcon,
+  ErrorOutline as BugReportIcon,
   Home as HomeIcon,
   SettingsOutlined as SettingsOutlinedIcon,
-  SwitchAccessShortcut as SwitchAccessShortcutIcon,
 } from '@mui/icons-material';
 import { Box } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 interface SidebarProps {
   settingsDialogOpen: () => void;
-  shortcutsDialogOpen: () => void;
+  feedbackDialogOpen: () => void;
 }
 
-export const Sidebar: React.FC<SidebarProps> = ({ settingsDialogOpen, shortcutsDialogOpen }) => {
+export const Sidebar: React.FC<SidebarProps> = ({ settingsDialogOpen, feedbackDialogOpen }) => {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -44,7 +43,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ settingsDialogOpen, shortcutsD
           isActive={location.pathname === Paths.HOME}
           onClick={() => navigate(Paths.HOME)}
         />
-        <IconTitleButton
+        {/* <IconTitleButton
           icon={
             <AutoModeIcon
               sx={{
@@ -57,7 +56,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ settingsDialogOpen, shortcutsD
           isActive={location.pathname === Paths.MACROS}
           onClick={() => navigate(Paths.MACROS)}
           disabled
-        />
+        /> */}
       </Box>
       <Box
         sx={{
@@ -75,8 +74,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ settingsDialogOpen, shortcutsD
           onClick={settingsDialogOpen}
         />
         <IconTitleButton
-          icon={<SwitchAccessShortcutIcon sx={{ width: '1.5rem', height: '1.5rem' }} />}
-          onClick={shortcutsDialogOpen}
+          icon={<BugReportIcon sx={{ width: '1.5rem', height: '1.5rem' }} />}
+          onClick={feedbackDialogOpen}
         />
       </Box>
     </Box>
