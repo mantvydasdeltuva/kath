@@ -9,14 +9,13 @@ const PageTitle: QuartzComponent = ({ fileData, cfg, displayClass }: QuartzCompo
   const baseDir = pathToRoot(fileData.slug!)
   return (
     <div>
-      <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: "1rem" }}>
-
+      <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: "1rem", }}>
         <img src="/static/icon.png" style={{width: "2rem"}}></img>
         <h2 class={classNames(displayClass, "page-title")}>
           <a href={baseDir}>{title}</a>
         </h2>
       </div>
-      <p class={classNames(displayClass, "content-meta")} style={{ marginbottom: 0}}>
+      <p class={classNames(displayClass, "content-meta")}>
         {subTitle}
       </p>
     </div>
