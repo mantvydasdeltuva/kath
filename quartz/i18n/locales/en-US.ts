@@ -30,7 +30,7 @@ export default {
       darkMode: "Dark mode",
     },
     explorer: {
-      title: "Explorer",
+      title: "Table of Contents",
     },
     footer: {
       createdWith: "Documentation Created with",
@@ -51,7 +51,7 @@ export default {
       searchBarPlaceholder: "Search for something",
     },
     tableOfContents: {
-      title: "Table of Contents",
+      title: "Page Sections",
     },
     contentMeta: {
       readingTime: ({ minutes }) => `${minutes} min read`,
