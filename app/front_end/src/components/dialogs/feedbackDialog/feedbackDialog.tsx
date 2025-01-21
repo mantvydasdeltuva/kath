@@ -37,7 +37,7 @@ interface FeedbackDialogProps {
 export const FeedbackDialog = ({ open, onClose }: FeedbackDialogProps) => {
   const Theme = useTheme();
 
-  const email = 'contact.kathteam@gmail.com';
+  const email = 'kathteam@outlook.com';
 
   return (
     <BootstrapDialog onClose={onClose} open={open}>
