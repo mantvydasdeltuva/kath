@@ -34,7 +34,7 @@ export const TextCopyArea = ({ value }: TextCopyAreaProps) => {
         borderColor: Theme.palette.primary.main,
       }}
     >
-      <Typography sx={{ fontWeight: '700', fontSize: '1rem', pr: '0.5rem' }}>{value}</Typography>
+      <Typography sx={{ fontWeight: '700', fontSize: '1rem', pr: '0.25rem' }}>{value}</Typography>
       <IconButton
         aria-label='copy'
         onClick={onValueCopy}
