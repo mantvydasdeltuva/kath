@@ -26,6 +26,7 @@ export const MergeGroupButtons: React.FC<MergeGroupButtonsProps> = () => {
   } = useToolbarContext();
 
   const mergeAllClick = useCallback(async () => {
+    lovdErrorStateUpdate('');
     clinvarErrorStateUpdate('');
     gnomadErrorStateUpdate('');
 
