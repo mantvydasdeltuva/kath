@@ -8,7 +8,7 @@ import * as Plugin from "./quartz/plugins"
  */
 const config: QuartzConfig = {
   configuration: {
-    pageTitle: "Kath Manual",
+    pageTitle: "Kath Docs",
     pageSubTitle: "v0.2.0-alpha",
     pageTitleSuffix: "",
     enableSPA: true,
