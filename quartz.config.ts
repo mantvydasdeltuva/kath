@@ -8,7 +8,7 @@ import * as Plugin from "./quartz/plugins"
  */
 const config: QuartzConfig = {
   configuration: {
-    pageTitle: "Kath Guide",
+    pageTitle: "Kath Manual",
     pageSubTitle: "v0.2.0-alpha",
     pageTitleSuffix: "",
     enableSPA: true,
@@ -17,7 +17,7 @@ const config: QuartzConfig = {
       provider: "plausible",
     },
     locale: "en-US",
-    baseUrl: "www.kath.lt",
+    baseUrl: "www.kath.lt/manual",
     ignorePatterns: ["private", "templates", ".obsidian"],
     defaultDateType: "created",
     generateSocialImages: false,
