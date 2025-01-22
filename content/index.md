@@ -100,3 +100,6 @@ For the upcoming **v0.3-alpha** development, kath will undergo a comprehensive U
 	<img src="assets/kath_future_design_light.png" alt="Kath Future Design Light" style="width: 400px; height: auto; border-radius: 4px;">
   <img src="assets/kath_future_design_dark.png" alt="Kath Future Design Dark" style="width: 400px; height: auto; border-radius: 4px;">
 </div>
+
+> [!note]
+> This page is temporary.

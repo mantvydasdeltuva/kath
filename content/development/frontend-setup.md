@@ -2,10 +2,10 @@
 title: Front-End Setup
 description: A guide to setting up the front-end environment for kath project development.
 tags: 
-  - Development
-  - Front-End
-  - Setup
-  - Guide
+    - Development
+    - Front-End
+    - Setup
+    - Guide
 draft: false
 date: 2025-01-22
 ---
