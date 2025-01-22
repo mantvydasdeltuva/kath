@@ -25,6 +25,42 @@ export const MergeGroupButtons: React.FC<MergeGroupButtonsProps> = () => {
     gnomadErrorStateUpdate,
   } = useToolbarContext();
 
+  const mergeAllClick = useCallback(async () => {
+    lovdErrorStateUpdate('');
+    clinvarErrorStateUpdate('');
+    gnomadErrorStateUpdate('');
+
+    if (!lovdFile) lovdErrorStateUpdate('Please select a LOVD file');
+    if (!clinvarFile) clinvarErrorStateUpdate('Please select a ClinVar file');
+    if (!gnomadFile) gnomadErrorStateUpdate('Please select a gnomAD file');
+    if (!lovdFile || !clinvarFile || !gnomadFile) return;
+
+    blockedStateUpdate(true);
+
+    try {
+      const timestamp = generateTimestamp();
+      const savePath = saveTo !== defaultSaveTo ? saveTo.id : findUniqueFileName(fileTree, `all_merged_${timestamp}.csv`);
+      if (getFileExtension(savePath) !== 'csv') {
+        saveToErrorStateUpdate('Select .csv');
+        return
+      }
+
+      await axios.get(`${Endpoints.WORKSPACE_MERGE}/all/${savePath}`, {
+        params: {
+          override,
+          "lovdFile": lovdFile.id,
+          "clinvarFile": clinvarFile.id,
+          "gnomadFile": gnomadFile.id,
+        },
+      });
+    } catch (error) {
+      console.error('Error merging all files:', error);
+    } finally {
+      blockedStateUpdate(false);
+    }
+
+  }, [saveTo, override, lovdFile, clinvarFile, gnomadFile]);
+
   const mergeLovdAndGnomadClick = useCallback(async () => {
     clinvarErrorStateUpdate('');
 
@@ -89,6 +125,12 @@ export const MergeGroupButtons: React.FC<MergeGroupButtonsProps> = () => {
 
   const buttons: ToolbarGroupItemProps[] = useMemo(
     () => [
+      {
+        group: 'merge',
+        icon: MergeTypeIcon,
+        label: 'Merge All',
+        onClick: mergeAllClick,
+      },
       {
         group: 'merge',
         icon: MergeTypeIcon,
