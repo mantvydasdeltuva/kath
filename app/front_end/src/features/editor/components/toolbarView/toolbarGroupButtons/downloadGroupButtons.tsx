@@ -13,7 +13,16 @@ export interface DownloadGroupButtonsProps {}
 export const DownloadGroupButtons: React.FC<DownloadGroupButtonsProps> = () => {
   const { blockedStateUpdate } = useStatusContext();
   const { fileTree } = useWorkspaceContext();
-  const { saveTo, saveToErrorStateUpdate, override, gene } = useToolbarContext();
+  const { saveTo, saveToStateUpdate, saveToErrorStateUpdate, override, gene } = useToolbarContext();
+
+  const handleDownloadAllClick = useCallback(async () => {
+    saveToStateUpdate(defaultSaveTo);
+    await handleDownloadLovdClick();
+    await new Promise((resolve) => setTimeout(resolve, 500));
+    await handleDownloadClinvarClick();
+    await new Promise((resolve) => setTimeout(resolve, 500));
+    await handleDownloadGnomadClick();
+  }, [gene]);
 
   const handleDownloadLovdClick = useCallback(async () => {
     blockedStateUpdate(true);
@@ -95,6 +104,12 @@ export const DownloadGroupButtons: React.FC<DownloadGroupButtonsProps> = () => {
 
   const buttons: ToolbarGroupItemProps[] = useMemo(
     () => [
+      {
+        group: 'download',
+        icon: DownloadIcon,
+        label: 'Download All',
+        onClick: handleDownloadAllClick,
+      },
       {
         group: 'download',
         icon: DownloadIcon,
