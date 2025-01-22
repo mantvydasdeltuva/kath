@@ -10,7 +10,9 @@ const PageTitle: QuartzComponent = ({ fileData, cfg, displayClass }: QuartzCompo
   return (
     <div>
       <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: "1rem", }}>
-        <img src="/static/icon.png" style={{width: "2rem"}}></img>
+        <a href={baseDir} style={{ width: "2rem", height: "2rem" }}>
+          <img src="/static/icon.png" style={{width: "2rem", margin: "0 0"}}></img>
+        </a>
         <h2 class={classNames(displayClass, "page-title")}>
           <a href={baseDir}>{title}</a>
         </h2>
