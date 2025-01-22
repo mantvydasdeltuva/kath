@@ -23,37 +23,6 @@ show: false
 
 ---
 
-### 👥 Teams Structure
-
-#### 📣 Communications Team:
-
-| **Team Member** | **Institution** | **Role** | **GitHub** | **LinkedIn** | **Active** |
-|:-:|:-:|:-:|:-:|:-:|:-:|
-| Kazimieras Bagdonas | Kaunas University of Technology | Project Mentor | - | [kazbag](https://www.linkedin.com/in/kazbag/) | ✅ |
-| Ignas Sabaliauskas | Kaunas University of Technology | Communications Lead | - | [ignas-sabaliauskas](https://www.linkedin.com/in/ignas-sabaliauskas/) | ✅ |
-
-#### 🧩 Front End Team:
-
-| **Team Member** | **Institution** | **Role** | **GitHub** | **LinkedIn** | **Active** |
-|:-:|:-:|:-:|:-:|:-:|:-:|
-| Mantvydas Deltuva | Kaunas University of Technology | Lead Frontend Developer | [mantvydasdeltuva](https://github.com/mantvydasdeltuva/) | [here](https://www.linkedin.com/in/mantvydasdeltuva/) | ✅ |
-| Justinas Teselis | Kaunas University of Technology | Frontend Developer | [justinnas](https://github.com/justinnas/) | [here](https://www.linkedin.com/in/justinasteselis/) | ✅ |
-| Paulius Preikša | Kaunas University of Technology | Frontend Developer | [PauliusPreiksaCode](https://github.com/PauliusPreiksaCode) | [here](https://www.linkedin.com/in/paulius-preiksa/) | ❌ |
-
-#### 🗄️ Back End Team:
-
-| **Team Member** | **Institution** | **Role** | **GitHub** | **LinkedIn** | **Active** |
-|:-:|:-:|:-:|:-:|:-:|:-:|
-| Vladyslav Levchenko | Kaunas University of Technology | Backend Developer | [Akaud](https://github.com/Akaud) | [here](https://www.linkedin.com/in/vladyslav-levchenko-409656324/) | ✅ |
-| Kajus Černiauskas | Kaunas University of Technology | Backend Developer | [KajusC](https://github.com/KajusC) | [here](https://www.linkedin.com/in/kajus-%C4%8Derniauskas-a68506205/) | ✅ |
-| Nojus Sajauskas | Kaunas University of Technology | Backend Developer | [nojux-official](https://github.com/nojux-official) | [here](https://www.linkedin.com/in/nojus-sajauskas-7aa74b259/) | ✅ |
-| Yehor Nesterenko | Kaunas University of Technology | Backend Developer | - | [here](https://www.linkedin.com/in/yehor-nesterenko-20b471298/) | ✅ |
-| Marius Petrauskas | Kaunas University of Technology | Backend Developer | - | - | ✅ |
-| Ernest Tretjakov | Kaunas University of Technology | Backend Developer | - | [here](https://www.linkedin.com/in/ernest-tretjakov/) | ✅ |
-| Dainius Kirsnauskas | Kaunas University of Technology | Lead Backend Developer | [Strexas](https://github.com/Strexas) | [here](https://www.linkedin.com/in/dainius-kirsnauskas-2b8915276/) | ❌ |
-
----
-
 ### 🤝 Advisors
 
 We proudly acknowledge our advisors who contribute their expertise and resources to support kath’s development:
@@ -70,25 +39,6 @@ We proudly acknowledge our advisors who contribute their expertise and resources
     <p>Innovative solutions in genomics and biotechnology.</p>
   </div>
 </div>
-
----
-
-### ⚙️ Setup Instructions
-
-For a complete setup, follow these steps and refer to the `README.md` files in `app/front_end` and `app/back_end` for detailed configurations.
-
-1. **Clone the Repository**
-
-    ```bash
-    git clone https://github.com/your-repo/kath.git
-    ```
-
-2. **Complete Front-end and Back-end Setup**
-
-    - Go to the `app/front_end` and `app/back_end` directories.
-    - Open the `README.md` file in each directory and follow the specific installation and configuration steps provided.
-
-After completing these steps, your environment should be set up and ready to run.
 
 ---
 
