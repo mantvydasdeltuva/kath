@@ -7,7 +7,7 @@ tags:
   - Setup
   - Guide
 draft: false
-date: 2025-01-20
+date: 2025-01-22
 ---
 
 This guide walks you through the process of setting up and running a Front-End development environment using **Vite**, a fast and lean tool, alongside **React** for building the user interface, and **TypeScript** for adding static typing to your application.
