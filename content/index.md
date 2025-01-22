@@ -1,5 +1,5 @@
 ---
-title: Kath Manual
+title: Kath Docs
 description: An introduction to Kath, your guide to explore its purpose and features.
 draft: false
 date: 2025-01-20
