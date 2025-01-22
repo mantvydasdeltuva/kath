@@ -51,9 +51,9 @@ const defaultOptions = {
     }
   
     if (a.file && !b.file) {
-      return 1;
-    } else {
       return -1;
+    } else {
+      return 1;
     }
   },
   filterFn: (node) => node.name !== "tags",
