@@ -176,7 +176,7 @@ This guide offers step-by-step instructions for setting up and running a **Flask
     Open the _Command Palette_ `Ctrl+Shift+P`, type `>Python: Select Interpreter` and select the Python interpreter from your WSL virtual environment:
     - Select `Enter interpreter path...`.
     - Select `Find...`.
-    - Open `/mnt/c/Users/YourUsername/Path/To/Project/app/back_end/.venv/bin/python3.10`.
+    - Open `/mnt/c/Users/YourUsername/Path/To/Project/app/back_end/.venv/bin/python3.12`.
 
 ---
 
