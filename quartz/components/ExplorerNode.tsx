@@ -186,7 +186,8 @@ export function ExplorerNode({ node, opts, fullPath, fileData }: ExplorerNodePro
             // Node with entire folder
             // Render svg button + folder name, then children
             <div class="folder-container">
-              <svg
+              <svg 
+                style={{paddingLeft: "0.25rem", paddingRight: "0.05rem"}}
                 xmlns="http://www.w3.org/2000/svg"
                 width="12"
                 height="12"
@@ -219,7 +220,7 @@ export function ExplorerNode({ node, opts, fullPath, fileData }: ExplorerNodePro
             <ul
               // Inline style for left folder paddings
               style={{
-                paddingLeft: node.name !== "" ? "1.4rem" : "0",
+                paddingLeft: node.name !== "" ? "1.15rem" : "0",
               }}
               class="content"
               data-folderul={folderPath}

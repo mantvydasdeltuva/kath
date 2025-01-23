@@ -10,26 +10,66 @@ import { i18n } from "../i18n"
 
 // Options interface defined in `ExplorerNode` to avoid circular dependency
 const defaultOptions = {
-  folderClickBehavior: "collapse",
+  folderClickBehavior: "link",
   folderDefaultState: "collapsed",
   useSavedState: true,
   mapFn: (node) => {
-    return node
+    // dont change name of root node
+    if (node.depth > 0) {
+      // set emoji for file
+      if (node.file) {
+        switch (node.name) {
+          case "project-goals":
+            node.displayName = "🎯" + node.displayName
+            break
+          case "getting-started":
+            node.displayName = "🗺️" + node.displayName
+            break
+          case "user-interface-installation":
+            node.displayName = "🖥️" + node.displayName
+            break
+          case "server-installation":
+            node.displayName = "⚙️" + node.displayName
+            break
+          case "backend-setup":
+            node.displayName = "🗄️" + node.displayName
+            break
+          case "documentation":
+            node.displayName = "📝" + node.displayName
+            break
+          case "frontend-setup":
+            node.displayName = "🌍" + node.displayName
+            break
+          case "future-work":
+            node.displayName = "🛠️" + node.displayName
+            break
+          case "team-structure":
+            node.displayName = "🤝" + node.displayName
+            break
+          case "workflow-guidelines":
+            node.displayName = "🔀" + node.displayName
+            break
+          default:
+            node.displayName = "📄" + node.displayName
+            break
+        }
+      }
+    }
   },
   sortFn: (a, b) => {
-    // Sort order: folders first, then files. Sort folders based on custom order and files aphabetically
+    // Sort order: files first, then folders. Sort folders based on custom order and files custom and then alphabetically
     if (!a.file && !b.file) {
-      const customFolderOrder = ['user manual', 'deployment', 'development'];
+      const customFolderOrder = ['manual', 'deployment', 'development'];
   
       // Sort folders according to custom folder order
-      const aFolderName = a.displayName.toLowerCase();
-      const bFolderName = b.displayName.toLowerCase();
+      const aFolderName = a.name.toLowerCase();
+      const bFolderName = b.name.toLowerCase();
 
       const aIndex = customFolderOrder.indexOf(aFolderName);
       const bIndex = customFolderOrder.indexOf(bFolderName);
 
       if (aIndex === -1 && bIndex === -1) {
-        return a.displayName.localeCompare(b.displayName, undefined, {
+        return a.name.localeCompare(b.name, undefined, {
           numeric: true,
           sensitivity: "base",
         });
@@ -42,12 +82,37 @@ const defaultOptions = {
     }
 
     if (a.file && b.file) {
-      // numeric: true: Whether numeric collation should be used, such that "1" < "2" < "10"
-      // sensitivity: "base": Only strings that differ in base letters compare as unequal. Examples: a ≠ b, a = á, a = A
-      return a.displayName.localeCompare(b.displayName, undefined, {
-        numeric: true,
-        sensitivity: "base",
-      })
+      const customFileOrder = [
+        // root folder
+        'project-goals',
+        // root.manual folder
+        'interface-components',
+        // root.deployment folder 
+        'user-interface-installation', 'server-installation',
+        // root.development folder
+        'frontend-setup', 'backend-setup', 'documentation', 'workflow-guidelines', 'future-work', 'team-structure',
+      ];
+
+      // Sort files according to custom file order
+      const aFileName = a.name.toLowerCase();
+      const bFileName = b.name.toLowerCase();
+
+      const aIndex = customFileOrder.indexOf(aFileName);
+      const bIndex = customFileOrder.indexOf(bFileName);
+
+      if (aIndex === -1 && bIndex === -1) {
+        // numeric: true: Whether numeric collation should be used, such that "1" < "2" < "10"
+        // sensitivity: "base": Only strings that differ in base letters compare as unequal. Examples: a ≠ b, a = á, a = A
+        return a.name.localeCompare(b.name, undefined, {
+          numeric: true,
+          sensitivity: "base",
+        });
+      }
+
+      if (aIndex === -1) return 1;
+      if (bIndex === -1) return -1;
+
+      return aIndex - bIndex;
     }
   
     if (a.file && !b.file) {

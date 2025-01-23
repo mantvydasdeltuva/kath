@@ -1,5 +1,5 @@
 ---
-title: Documentation Setup
+title: Documentation
 description: A guide to setting up the environment for kath project documentation development.
 tags: 
     - Development
