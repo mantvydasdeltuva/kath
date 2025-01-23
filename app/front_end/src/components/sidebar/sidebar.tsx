@@ -1,6 +1,7 @@
 import { IconTitleButton } from '@/components/buttons/IconTitleButton';
-import { Paths } from '@/types';
+import { ExternalLinks, Paths } from '@/types';
 import {
+  AutoStories as AutoStoriesIcon,
   ErrorOutline as BugReportIcon,
   Home as HomeIcon,
   SettingsOutlined as SettingsOutlinedIcon,
@@ -42,6 +43,19 @@ export const Sidebar: React.FC<SidebarProps> = ({ settingsDialogOpen, feedbackDi
           title={'Home'}
           isActive={location.pathname === Paths.HOME}
           onClick={() => navigate(Paths.HOME)}
+        />
+        <IconTitleButton
+          icon={
+            <AutoStoriesIcon
+              sx={{
+                width: '1.4rem',
+                height: '1.4rem',
+              }}
+            />
+          }
+          title={'Manual'}
+          isActive={false}
+          onClick={() => window.open(ExternalLinks.MANUAL, '_blank', 'noopener,noreferrer')}
         />
         {/* <IconTitleButton
           icon={
