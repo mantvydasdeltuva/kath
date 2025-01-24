@@ -155,7 +155,7 @@ date: 2025-01-24
         font-family: 'Gill Sans MT';
         font-size: 1.4rem;
         font-weight: bold;
-        line-height: 1.3rem;
+        line-height: 1.4rem;
         color: #EBEBEC;
     }
 
