@@ -73,6 +73,35 @@ export const ApplyGroupButtons: React.FC<ApplyGroupButtonsProps> = () => {
     }
   }, [saveTo, override, applyTo]);
 
+  const applyRevelClick = useCallback(async () => {
+    if (!applyTo) {
+      applyErrorStateUpdate('Please select a file');
+      return;
+    }
+
+    blockedStateUpdate(true);
+
+    try {
+      const timestamp = generateTimestamp();
+      const savePath = saveTo.id !== defaultSaveTo.id ? saveTo.id : findUniqueFileName(fileTree, `revel_${timestamp}.csv`);
+      if (getFileExtension(savePath) !== 'csv') {
+        saveToErrorStateUpdate('Select .csv');
+        return
+      }
+
+      await axios.get(`${Endpoints.WORKSPACE_APPLY}/revel/${savePath}`, {
+        params: {
+          override,
+          "applyTo": applyTo.id,
+        },
+      });
+    } catch (error) {
+      console.error('Error applying REVEL:', error);
+    } finally {
+      blockedStateUpdate(false);
+    }
+  }, [saveTo, override, applyTo]);
+
   const buttons: ToolbarGroupItemProps[] = useMemo(
     () => [
       {
@@ -87,8 +116,14 @@ export const ApplyGroupButtons: React.FC<ApplyGroupButtonsProps> = () => {
         label: 'Apply CADD',
         onClick: applyCaddClick,
       },
+      {
+        group: 'apply',
+        icon: DeblurIcon,
+        label: 'Apply REVEL',
+        onClick: applyRevelClick,
+      },
     ],
-    [applySpliceAiClick, applyCaddClick]
+    [applySpliceAiClick, applyCaddClick, applyRevelClick]
   );
 
   return (
