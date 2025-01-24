@@ -103,9 +103,52 @@ def get_workspace_merge_all(relative_path):
             sid,
         )
 
-        ###
-        ### MERGING LOGIC HERE
-        ###
+        if not os.path.exists(lovd_file):
+            raise FileNotFoundError(f"LOVD data file not found at: {lovd_file}")
+
+        if not os.path.exists(gnomad_file):
+            raise FileNotFoundError(f"gnomAD data file not found at: {gnomad_file}")
+
+        if not os.path.exists(clinvar_file):
+            raise FileNotFoundError(f"Clinvar data file not found at: {clinvar_file}")
+
+        existing_data = pd.DataFrame()
+        if os.path.exists(destination_path):
+            if override:
+                os.remove(destination_path)
+            else:
+                existing_data = pd.read_csv(destination_path)
+
+        lovd_data = parse_lovd(lovd_file)
+        gnomad_data = parse_gnomad(gnomad_file)
+        clinvar_data = clinvar_file_parse(clinvar_file)
+
+        set_lovd_dtypes(lovd_data)
+        set_gnomad_dtypes(gnomad_data)
+        set_clinvar_dtypes(clinvar_data)
+
+        clinvar_data = transform_spdi_to_format(clinvar_data)
+
+        variants_on_genome = lovd_data["Variants_On_Genome"].copy()
+        lovd_data = pd.merge(
+            lovd_data["Variants_On_Transcripts"],
+            variants_on_genome[
+                ["id", "VariantOnGenome/DNA", "VariantOnGenome/DNA/hg38"]
+            ],
+            on="id",
+            how="left",
+        )
+        lovd_clinvar_data= merge_lovd_clinvar(lovd_data, clinvar_data)
+        final_data = merge_gnomad_lovd(lovd_clinvar_data, gnomad_data)
+
+        # Append existing data if we're not overriding
+        if not existing_data.empty:
+            final_data = pd.concat([existing_data, final_data], ignore_index=True)
+
+        try:
+            final_data.to_csv(destination_path, index=False)
+        except OSError as e:
+            raise RuntimeError(f"Error saving file: {e}")
 
         # Emit a feedback to the user's console
         socketio_emit_to_user_session(
