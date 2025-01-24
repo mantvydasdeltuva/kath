@@ -405,7 +405,7 @@ def get_workspace_apply_revel(relative_path):
             sid,
         )
         try:
-            result_data_revel = main_revel_pipeline(destination_path)
+            result_data_revel = main_revel_pipeline(input_gene_dataset = apply_to)
         except Exception as e:
             raise RuntimeError(f"Error applying REVEL algorithm: {e}")
 

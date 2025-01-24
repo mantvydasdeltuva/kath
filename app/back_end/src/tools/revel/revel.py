@@ -248,13 +248,13 @@ def get_single_revel_score(chromosome, grch38_position, ref, alt, revel_db_file)
         return pd.NA
     
 
-def main_revel_pipeline(input_gene_dataset=None, data_store_dir=None):
+def main_revel_pipeline(input_gene_dataset=None, revel_data_store_dir=None) -> pd.DataFrame:
     
     revel_filename = 'revel_with_transcript_ids'
     revel_db_filename = revel_filename + '.db'
     
-    if data_store_dir:
-        current_script_dir = data_store_dir
+    if revel_data_store_dir:
+        current_script_dir = revel_data_store_dir
     else:
         print("Data store directory not provided. Using default folder.")
         current_script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -291,11 +291,11 @@ def main_revel_pipeline(input_gene_dataset=None, data_store_dir=None):
         
     except FileNotFoundError:
         print(f"File not found: {input_gene_dataset}")
-        yield FileNotFoundError
+        raise
     
     except pd.errors.EmptyDataError:
         print(f"Empty file: {input_gene_dataset}")
-        yield pd.errors.EmptyDataError
+        raise
 
 if __name__ == '__main__':
     main_revel_pipeline()
