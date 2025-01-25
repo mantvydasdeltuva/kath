@@ -91,7 +91,6 @@ class revel_initiator:
         conn = sqlite3.connect(db_path)
         conn.execute('PRAGMA journal_mode=WAL')
         conn.execute('PRAGMA synchronous=NORMAL')
-
         conn.execute('''
             CREATE TABLE IF NOT EXISTS revel (
                 chr TEXT,
@@ -104,6 +103,7 @@ class revel_initiator:
         ''')
 
         total_rows = sum(1 for _ in open(revel_file)) - 1
+        chunk = []
         chunk_size = 100_000
         processed = 0
         print(f"Found {total_rows:,} rows. Beginning conversion...")
@@ -111,41 +111,47 @@ class revel_initiator:
         with open(revel_file) as f:
             reader = csv.DictReader(f)
 
-            while True:
-                chunk = []
-                for _ in range(chunk_size):
-                    try:
-                        row = next(reader)
-                    except StopIteration:
-                        break
-                    
-                    try:
-                        # Skip rows where grch38_pos is '.'
-                        if row['grch38_pos'] == '.':
-                            continue
+            for _, row in enumerate(reader):
+                if row['grch38_pos'] == '.':
+                    continue
 
-                        chunk.append((
-                            row['chr'],
-                            int(row['grch38_pos']),
-                            row['ref'],
-                            row['alt'],
-                            float(row['REVEL'])
-                        ))
+                try:
+                    parsed_row = (
+                        row['chr'],
+                        int(row['grch38_pos']),
+                        row['ref'],
+                        row['alt'],
+                        float(row['REVEL'])
+                    )
+                    chunk.append(parsed_row)
 
-                        if not chunk:
-                            break
-
+                    if len(chunk) >= chunk_size:
                         conn.executemany('INSERT OR IGNORE INTO revel VALUES (?,?,?,?,?)', chunk)
-                        processed += len(chunk)
-                        printProgressBar(processed, total_rows, 
-                                prefix='Progress:', 
-                                suffix=f'Complete ({processed:,}/{total_rows:,} rows)', 
-                                length=50)
-                        
-                    except Exception as e:
-                        print(f"Error in processing row (Possibly not supporting \"X,Y ... \" chromosome types): {e}")
-                    
+                        conn.commit()
+                        chunk = []
+
+                        processed += chunk_size
+                        printProgressBar(
+                            iteration = processed,
+                            total = total_rows, 
+                            prefix = 'Progress:', 
+                            suffix = f'Complete ({processed:,}/{total_rows:,} rows)', 
+                            length = 50
+                        )
+                except Exception as e:
+                    print(f"Error in processing row (Possibly not supporting \"X,Y ... \" chromosome types): {e}")
+            if chunk:
+                conn.executemany('INSERT OR IGNORE INTO revel VALUES (?,?,?,?,?)', chunk)
                 conn.commit()
+
+                processed += len(chunk)
+                printProgressBar(
+                    iteration = processed,
+                    total = total_rows, 
+                    prefix = 'Progress:', 
+                    suffix = f'Complete ({processed:,}/{total_rows:,} rows)', 
+                    length = 50
+                )
 
         print("Creating indexes...")
         conn.execute('CREATE INDEX idx_pos ON revel(grch38_pos)')
