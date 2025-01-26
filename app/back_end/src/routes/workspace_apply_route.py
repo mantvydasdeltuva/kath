@@ -391,6 +391,7 @@ def get_workspace_apply_revel(relative_path):
     destination_path = os.path.join(WORKSPACE_DIR, uuid, relative_path)
     override = request.args.get("override")
     apply_to = os.path.join(WORKSPACE_DIR, uuid, request.args.get("applyTo"))
+    revel_db_path = os.path.join(WORKSPACE_DIR, "revel", "revel_with_transcript_ids.db")
 
     try:
         # Emit a feedback to the user's console
@@ -405,7 +406,7 @@ def get_workspace_apply_revel(relative_path):
             sid,
         )
         try:
-            result_data_revel = main_revel_pipeline(input_gene_dataset = apply_to)
+            result_data_revel = main_revel_pipeline(dataset_path = apply_to, revel_db_path = revel_db_path)
         except Exception as e:
             raise RuntimeError(f"Error applying REVEL algorithm: {e}")
 
