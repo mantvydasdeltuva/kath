@@ -204,7 +204,7 @@ The Backend Team handles the project's core logic, server-side functionality, an
             <div class="avatar-container">
                 <div class="avatar-wrapper">
                     <div class="avatar-border"></div>
-                    <img src="https://media.licdn.com/dms/image/v2/D4D03AQGdo2LO_IBuBQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1723895829848?e=1743033600&v=beta&t=2OYO4rwG3qjB5RlZCzQFW1eQ-KPuXmvu8D-wktmVNGs" als="Avatar" class="avatar"/>
+                    <img src="https://media.licdn.com/dms/image/v2/D4D03AQE4wCR89j-h7A/profile-displayphoto-shrink_400_400/B4DZSYPukxG4Ag-/0/1737721047971?e=1743638400&v=beta&t=r3SVQ1jOHZ8K9I_ISN10DeLkoJrvUZmFz2duAKB6Wsw" als="Avatar" class="avatar"/>
                 </div>
             </div>
             <div class="text-container">
