@@ -55,7 +55,7 @@ The Communications Team ensures smooth collaboration between developers and advi
         <div class="links-container">
             <!-- LinkedIn link -->
             <a href="https://www.linkedin.com/in/kazbag/" class="linkedin">
-                <img src="../assets/linkedin.svg" alt="LinkedIn" class="linkedin-icon">
+                <img src="../assets/svg/linkedin.svg" alt="LinkedIn" class="linkedin-icon">
             </a>
         </div>
     </div>
@@ -77,7 +77,7 @@ The Communications Team ensures smooth collaboration between developers and advi
         </div>
         <div class="links-container">
             <a href="https://www.linkedin.com/in/eimantas-siburkis/" class="linkedin">
-                <img src="../assets/linkedin.svg" alt="LinkedIn" class="linkedin-icon">
+                <img src="../assets/svg/linkedin.svg" alt="LinkedIn" class="linkedin-icon">
             </a>
         </div>
     </div>
@@ -99,7 +99,7 @@ The Communications Team ensures smooth collaboration between developers and advi
         </div>
         <div class="links-container">
             <a href="https://www.linkedin.com/in/ignas-sabaliauskas/" class="linkedin">
-                <img src="../assets/linkedin.svg" alt="LinkedIn" class="linkedin-icon">
+                <img src="../assets/svg/linkedin.svg" alt="LinkedIn" class="linkedin-icon">
             </a>
         </div>
     </div>
@@ -131,10 +131,10 @@ The Frontend Team focuses on building user-facing interfaces, ensuring accessibi
         </div>
         <div class="links-container">
             <a href="https://www.linkedin.com/in/mantvydasdeltuva/" class="linkedin">
-                <img src="../assets/linkedin.svg" alt="LinkedIn" class="linkedin-icon">
+                <img src="../assets/svg/linkedin.svg" alt="LinkedIn" class="linkedin-icon">
             </a>
             <a href="https://github.com/mantvydasdeltuva" class="github">             
-                <img src="../assets/github.svg" alt="GitHub" class="github-icon">
+                <img src="../assets/svg/github.svg" alt="GitHub" class="github-icon">
             </a>
         </div>
     </div>
@@ -156,10 +156,10 @@ The Frontend Team focuses on building user-facing interfaces, ensuring accessibi
         </div>
         <div class="links-container">
             <a href="https://www.linkedin.com/in/justinasteselis/" class="linkedin">
-                <img src="../assets/linkedin.svg" alt="LinkedIn" class="linkedin-icon">
+                <img src="../assets/svg/linkedin.svg" alt="LinkedIn" class="linkedin-icon">
             </a>
             <a href="https://github.com/justinnas/" class="github">             
-                <img src="../assets/github.svg" alt="GitHub" class="github-icon">
+                <img src="../assets/svg/github.svg" alt="GitHub" class="github-icon">
             </a>
         </div>
     </div>
@@ -191,10 +191,10 @@ The Backend Team handles the project's core logic, server-side functionality, an
         </div>
         <div class="links-container">
             <a href="https://www.linkedin.com/in/vladyslav-levchenko-409656324/" class="linkedin">
-                <img src="../assets/linkedin.svg" alt="LinkedIn" class="linkedin-icon">
+                <img src="../assets/svg/linkedin.svg" alt="LinkedIn" class="linkedin-icon">
             </a>
             <a href="https://github.com/Akaud" class="github">             
-                <img src="../assets/github.svg" alt="GitHub" class="github-icon">
+                <img src="../assets/svg/github.svg" alt="GitHub" class="github-icon">
             </a>
         </div>
     </div>
@@ -216,10 +216,10 @@ The Backend Team handles the project's core logic, server-side functionality, an
         </div>
         <div class="links-container">
             <a href="https://www.linkedin.com/in/kajus-%C4%8Derniauskas-a68506205/" class="linkedin">
-                <img src="../assets/linkedin.svg" alt="LinkedIn" class="linkedin-icon">
+                <img src="../assets/svg/linkedin.svg" alt="LinkedIn" class="linkedin-icon">
             </a>
             <a href="https://github.com/KajusC" class="github">             
-                <img src="../assets/github.svg" alt="GitHub" class="github-icon">
+                <img src="../assets/svg/github.svg" alt="GitHub" class="github-icon">
             </a>
         </div>
     </div>
@@ -229,7 +229,7 @@ The Backend Team handles the project's core logic, server-side functionality, an
             <div class="avatar-container">
                 <div class="avatar-wrapper">
                     <div class="avatar-border"></div>
-                    <img src="../assets/default_avatar.jpg" als="Avatar" class="avatar"/>
+                    <img src="../assets/image/default_avatar.png" als="Avatar" class="avatar"/>
                 </div>
             </div>
             <div class="text-container">
@@ -241,7 +241,7 @@ The Backend Team handles the project's core logic, server-side functionality, an
         </div>
         <div class="links-container">
             <a href="https://github.com/cpu64" class="github">             
-                <img src="../assets/github.svg" alt="GitHub" class="github-icon">
+                <img src="../assets/svg/github.svg" alt="GitHub" class="github-icon">
             </a>
         </div>
     </div>
@@ -263,10 +263,10 @@ The Backend Team handles the project's core logic, server-side functionality, an
         </div>
         <div class="links-container">
             <a href="https://www.linkedin.com/in/nojus-sajauskas-7aa74b259/" class="linkedin">
-                <img src="../assets/linkedin.svg" alt="LinkedIn" class="linkedin-icon">
+                <img src="../assets/svg/linkedin.svg" alt="LinkedIn" class="linkedin-icon">
             </a>
             <a href="https://github.com/nojux-official" class="github">             
-                <img src="../assets/github.svg" alt="GitHub" class="github-icon">
+                <img src="../assets/svg/github.svg" alt="GitHub" class="github-icon">
             </a>
         </div>
     </div>
@@ -298,10 +298,10 @@ Individual contributors are members working independently on specific parts of t
         </div>
         <div class="links-container">
             <a href="https://www.linkedin.com/in/paulius-preiksa/" class="linkedin">
-                <img src="../assets/linkedin.svg" alt="LinkedIn" class="linkedin-icon">
+                <img src="../assets/svg/linkedin.svg" alt="LinkedIn" class="linkedin-icon">
             </a>
             <a href="https://github.com/PauliusPreiksaCode" class="github">             
-                <img src="../assets/github.svg" alt="GitHub" class="github-icon">
+                <img src="../assets/svg/github.svg" alt="GitHub" class="github-icon">
             </a>
         </div>
     </div>
@@ -320,7 +320,7 @@ This section is dedicated to recognizing and thanking team members who were once
             <div class="avatar-container">
                 <div class="avatar-wrapper">
                     <div class="avatar-border"></div>
-                    <img src="../assets/default_avatar.jpg" als="Avatar" class="avatar"/>
+                    <img src="../assets/image/default_avatar.png" als="Avatar" class="avatar"/>
                 </div>
             </div>
             <div class="text-container">
@@ -332,10 +332,10 @@ This section is dedicated to recognizing and thanking team members who were once
         </div>
         <div class="links-container">
             <a href="https://www.linkedin.com/in/dainius-kirsnauskas-2b8915276/" class="linkedin">
-                <img src="../assets/linkedin.svg" alt="LinkedIn" class="linkedin-icon">
+                <img src="../assets/svg/linkedin.svg" alt="LinkedIn" class="linkedin-icon">
             </a>
             <a href="https://github.com/Strexas" class="github">             
-                <img src="../assets/github.svg" alt="GitHub" class="github-icon">
+                <img src="../assets/svg/github.svg" alt="GitHub" class="github-icon">
             </a>
         </div>
     </div>

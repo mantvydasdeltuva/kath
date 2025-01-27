@@ -9,7 +9,7 @@ import * as Plugin from "./quartz/plugins"
 const config: QuartzConfig = {
   configuration: {
     pageTitle: "Kath Docs",
-    pageSubTitle: "v0.2.0-alpha",
+    pageSubTitle: "v0.2-alpha",
     pageTitleSuffix: "",
     enableSPA: true,
     enablePopovers: true,
