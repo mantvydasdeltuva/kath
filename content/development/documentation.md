@@ -167,7 +167,7 @@ This guide explains how to set up the environment and start contributing to the 
     Once your changes are pushed, create a _Pull Request_ from your branch into the `documentation` branch. **Direct pushes to the `documentation` branch are not allowed.**
 
 > [!tip]
-> Make sure to provide a clear description of your changes in the pull request so that reviewers can easily understand the updates. Also follow _Pull Request_ guidelines which are described in [[workflow-guidelines | Workflow Guidelines]].
+> Make sure to provide a clear description of your changes in the pull request so that reviewers can easily understand the updates. Also follow _Pull Request_ guidelines in [[workflow-guidelines#Pull Request Description Format|Workflow Guidelines]].
 
 ---
 

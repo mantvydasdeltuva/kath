@@ -90,7 +90,7 @@ const defaultOptions = {
         // root.deployment folder 
         'user-interface-installation', 'server-installation',
         // root.development folder
-        'frontend-setup', 'backend-setup', 'documentation', 'workflow-guidelines', 'future-work', 'team-structure',
+        'team-structure', 'workflow-guidelines', 'frontend-setup', 'backend-setup', 'documentation', 'future-work'
       ];
 
       // Sort files according to custom file order
