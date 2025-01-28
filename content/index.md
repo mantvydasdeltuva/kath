@@ -1,8 +1,8 @@
 ---
 title: Kath Docs
-description: An introduction to Kath, your guide to explore its purpose and features.
+description: Kath is a user-friendly GUI tool designed to streamline the in-depth analysis of gene variation data.
 draft: false
-date: 2025-01-20
+date: 2025-01-28
 show: false
 ---
 
@@ -10,33 +10,99 @@ show: false
 
 ---
 
-### 📖 Project Overview
+## Overview
 
-**kath** is a user-friendly GUI tool designed for the in-depth analysis of gene variation data sourced from LOVD, GNOMAD, and CLINVAR databases. It brings together a robust suite of functionalities that facilitate genetic research and analysis.
+**_Kath_ is a user-friendly GUI tool designed to streamline the in-depth analysis of gene variation data from LOVD, gnomAD, and ClinVar genetic databases**. By consolidating critical information into an accessible interface, _Kath_ empowers researchers, clinicians, and geneticists to uncover actionable insights with ease.
 
-<div align="center">
-	<img src="assets/image/kath_design_light.png" alt="Kath Design Light" style="width: 400px; height: auto; border-radius: 4px;">
-  <img src="assets/image/kath_design_dark.png" alt="Kath Design Dark" style="width: 400px; height: auto; border-radius: 4px;">
-</div>
+Built for efficiency and adaptability, it is ideal for tasks such as assessing pathogenicity or cross-referencing genetic variant data. It serves as a vital tool for advancing research, improving diagnostics, and supporting genomic studies.
+
+<img src="assets/image/kath_design_dark.png" alt="Kath Design Dark" style="border-radius: 0.25rem;">
 
 ---
 
-### 🤝 Advisors
+## Documentation
 
-We proudly acknowledge our advisors who contribute their expertise and resources to support kath’s development:
+Comprehensive and detailed documentation is provided to support all users, developers, and system administrators throughout the _Kath_. Whether you’re a first-time user, a contributor to the project, or managing the deployment and maintenance of _Kath_, our resources are designed to guide you at every step.
 
-<div align="center">
-  <div>
-    <img src="assets/image/harvard_logo.png" alt="Harvard University" style="width: 200px; height: auto; border-radius: 12px;">
-    <h3><a href="https://www.harvard.edu">Harvard University</a></h3>
-    <p>Leading institution in education and research.</p>
-  </div>
-  <div>
-    <img src="assets/image/genomika_logo.png" alt="Genomika Lietuva" style="width: 200px; height: auto; border-radius: 12px;">
-    <h3><a href="https://genomika.lt">Genomika Lietuva</a></h3>
-    <p>Innovative solutions in genomics and biotechnology.</p>
-  </div>
+### User Manual
+
+![[manual/index.md#^summary]]
+
+### System Deployment
+
+![[deployment/index.md#^summary]]
+
+### Project Development
+
+![[development/index.md#^summary]]
+
+---
+
+## Advisors
+
+We are honored to recognize the contributions of our advisors who **bring expertise, resources, and guidance to the development of _Kath_**. Their support is instrumental in ensuring the quality, innovation, and impact of our tool in the field of genetics.
+
+<div class="grid-container">
+    <div class="card">
+        <a href="https://www.harvard.edu">
+            <img src="assets/image/harvard_logo.png" alt="Harvard University">
+            <div class="card-title">Harvard University</div>
+        </a>
+        <div class="card-description">
+            Leading institution in education and research.
+        </div>
+    </div>
+    <div class="card">
+        <a href="https://genomika.lt">
+            <img src="assets/image/genomika_logo.png" alt="Genomika Lietuva">
+            <div class="card-title">Genomika Lietuva</div>
+        </a>
+        <div class="card-description">
+            Innovative solutions in genomics and biotechnology.
+        </div>
+    </div>
 </div>
 
-> [!note]
-> This page is temporary.
+<!-- CSS -->
+<style>
+    .grid-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr));
+        justify-items: center;
+        gap: 1rem;
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .card {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        max-width: 26rem;
+    }
+
+    .card a {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-decoration: none;
+    }
+
+    .card img {
+        width: auto;
+        height: 13rem;
+        border-radius: 0.25rem;
+    }
+
+    .card-title {
+        font-size: 1.4rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+        text-align: center;
+    }
+
+    .card-description {
+        text-align: center;
+        margin: 0.5rem 0;
+    }
+</style>

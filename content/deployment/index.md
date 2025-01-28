@@ -8,4 +8,4 @@ draft: false
 ---
 
 > [!summary]
-> The Deployment segment provides detailed instructions on how to set up the Kath project in various environments, including server setup, cloud deployment, and integration with third-party services. It covers prerequisites, environment configurations, deployment strategies, and post-deployment best practices to ensure a smooth implementation process.
+> The Deployment segment provides detailed instructions on how to set up the Kath project in various environments, including server setup, cloud deployment, and integration with third-party services. It covers prerequisites, environment configurations, deployment strategies, and post-deployment best practices to ensure a smooth implementation process. ^summary

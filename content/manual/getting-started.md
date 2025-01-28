@@ -4,12 +4,9 @@ description: This guide introduces key interface components for enhancing user e
 tags: 
     - End-User
     - Guide
-date: 2025-01-22
-draft: true
+date: 2025-01-28
+draft: false
 ---
 
 > [!todo]
-> Introduce introduction into user interface components/sections.
-
-> [!note]
-> Ability to add videos with `![](link)`
+> Introduce introduction into user interface components/sections. Ability to add videos with `![](link)`
