@@ -24,7 +24,8 @@ export interface ToolbarContextProps {
   lovdFile: FileModel | null;
   clinvarFile: FileModel | null;
   gnomadFile: FileModel | null;
-  mergeStateUpdate: (lovdFile?: FileModel, clinvarFile?: FileModel, gnomadFile?: FileModel) => void;
+  customFile: FileModel | null;
+  mergeStateUpdate: (lovdFile?: FileModel, clinvarFile?: FileModel, gnomadFile?: FileModel, customFile?: FileModel) => void;
 
   lovdError: string;
   lovdErrorStateUpdate: (lovdFileError: string) => void;
@@ -32,6 +33,8 @@ export interface ToolbarContextProps {
   clinvarErrorStateUpdate: (clinvarFileError: string) => void;
   gnomadError: string;
   gnomadErrorStateUpdate: (gnomadFileError: string) => void;
+  customError: string;
+  customErrorStateUpdate: (customFileError: string) => void;
 
   //
   // Apply state properties
@@ -80,6 +83,7 @@ export const ToolbarContext = createContext<ToolbarContextProps>({
   lovdFile: null,
   clinvarFile: null,
   gnomadFile: null,
+  customFile: null,
   mergeStateUpdate: () => {},
 
   lovdError: '',
@@ -88,6 +92,8 @@ export const ToolbarContext = createContext<ToolbarContextProps>({
   clinvarErrorStateUpdate: () => {},
   gnomadError: '',
   gnomadErrorStateUpdate: () => {},
+  customError: '',
+  customErrorStateUpdate: () => {},
 
   //
   // Apply state defaults
@@ -152,11 +158,13 @@ export const ToolbarContextProvider: React.FC<Props> = ({ children }) => {
   const [lovdFile, setLovdFile] = useState<FileModel | null>(null);
   const [clinvarFile, setClinvarFile] = useState<FileModel | null>(null);
   const [gnomadFile, setGnomadFile] = useState<FileModel | null>(null);
+  const [customFile, setCustomFile] = useState<FileModel | null>(null);
 
-  const mergeStateUpdate = (lovdFile?: FileModel, clinvarFile?: FileModel, gnomadFile?: FileModel) => {
+  const mergeStateUpdate = (lovdFile?: FileModel, clinvarFile?: FileModel, gnomadFile?: FileModel, customFile?: FileModel) => {
     if (lovdFile) setLovdFile(lovdFile);
     if (clinvarFile) setClinvarFile(clinvarFile);
     if (gnomadFile) setGnomadFile(gnomadFile);
+    if (customFile) setCustomFile(customFile);
   };
 
   const [lovdError, setLovdError] = useState<string>('');
@@ -175,6 +183,12 @@ export const ToolbarContextProvider: React.FC<Props> = ({ children }) => {
 
   const gnomadErrorStateUpdate = (gnomadFileError: string) => {
     setGnomadError(gnomadFileError);
+  };
+
+  const [customError, setCustomError] = useState<string>('');
+
+  const customErrorStateUpdate = (customFileError: string) => {
+    setCustomError(customFileError);
   };
 
   //
@@ -238,6 +252,7 @@ export const ToolbarContextProvider: React.FC<Props> = ({ children }) => {
     lovdFile,
     clinvarFile,
     gnomadFile,
+    customFile,
     mergeStateUpdate,
 
     lovdError,
@@ -246,6 +261,8 @@ export const ToolbarContextProvider: React.FC<Props> = ({ children }) => {
     clinvarErrorStateUpdate,
     gnomadError,
     gnomadErrorStateUpdate,
+    customError,
+    customErrorStateUpdate,
 
     //
     // Apply state

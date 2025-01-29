@@ -20,6 +20,7 @@ export const MergeGroupButtons: React.FC<MergeGroupButtonsProps> = () => {
     lovdFile,
     clinvarFile,
     gnomadFile,
+    customFile,
     lovdErrorStateUpdate,
     clinvarErrorStateUpdate,
     gnomadErrorStateUpdate,
@@ -51,6 +52,7 @@ export const MergeGroupButtons: React.FC<MergeGroupButtonsProps> = () => {
           "lovdFile": lovdFile.id,
           "clinvarFile": clinvarFile.id,
           "gnomadFile": gnomadFile.id,
+          "customFile": customFile?.id || '',
         },
       });
     } catch (error) {
@@ -58,8 +60,7 @@ export const MergeGroupButtons: React.FC<MergeGroupButtonsProps> = () => {
     } finally {
       blockedStateUpdate(false);
     }
-
-  }, [saveTo, override, lovdFile, clinvarFile, gnomadFile]);
+  }, [saveTo, override, lovdFile, gnomadFile, clinvarFile, customFile]);
 
   const mergeLovdAndGnomadClick = useCallback(async () => {
     clinvarErrorStateUpdate('');
@@ -144,7 +145,7 @@ export const MergeGroupButtons: React.FC<MergeGroupButtonsProps> = () => {
         onClick: mergeLovdAndClinvarClick,
       },
     ],
-    [mergeLovdAndGnomadClick, mergeLovdAndClinvarClick]
+    [mergeLovdAndGnomadClick, mergeLovdAndClinvarClick, mergeAllClick]
   );
 
   return (

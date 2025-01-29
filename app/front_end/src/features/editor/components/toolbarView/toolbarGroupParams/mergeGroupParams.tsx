@@ -25,13 +25,16 @@ export const MergeGroupParams: React.FC<MergeGroupParamsProps> = () => {
     lovdFile,
     clinvarFile,
     gnomadFile,
+    customFile,
     mergeStateUpdate,
     lovdError,
     clinvarError,
     gnomadError,
+    customError,
     lovdErrorStateUpdate,
     clinvarErrorStateUpdate,
     gnomadErrorStateUpdate,
+    customErrorStateUpdate,
   } = useToolbarContext();
 
   //
@@ -40,23 +43,30 @@ export const MergeGroupParams: React.FC<MergeGroupParamsProps> = () => {
   const [lovdFileState, setLovdFileState] = useState<FileModel | null>(lovdFile);
   const [clinvarFileState, setClinvarFileState] = useState<FileModel | null>(clinvarFile);
   const [gnomadFileState, setGnomadFileState] = useState<FileModel | null>(gnomadFile);
+  const [customFileState, setCustomFileState] = useState<FileModel | null>(customFile);
 
   const handleLovdFileChange = (value: FileModel) => {
     setLovdFileState(value);
-    mergeStateUpdate(value, undefined, undefined);
+    mergeStateUpdate(value, undefined, undefined, undefined);
     lovdErrorStateUpdate('');
   };
 
   const handleClinvarFileChange = (value: FileModel) => {
     setClinvarFileState(value);
-    mergeStateUpdate(undefined, value, undefined);
+    mergeStateUpdate(undefined, value, undefined, undefined);
     clinvarErrorStateUpdate('');
   };
 
   const handleGnomadFileChange = (value: FileModel) => {
     setGnomadFileState(value);
-    mergeStateUpdate(undefined, undefined, value);
+    mergeStateUpdate(undefined, undefined, value, undefined);
     gnomadErrorStateUpdate('');
+  };
+
+  const handleCustomFileChange = (value: FileModel) => {
+    setCustomFileState(value);
+    mergeStateUpdate(undefined, undefined, undefined, value);
+    customErrorStateUpdate('');
   };
 
   //
@@ -243,6 +253,40 @@ export const MergeGroupParams: React.FC<MergeGroupParamsProps> = () => {
             />
           )}
         </Box>
+        <Autocomplete
+          size="small"
+          sx={(theme) => ({
+            '& fieldset': {
+              borderColor: theme.palette.text.primary,
+              borderRadius: '1rem',
+            },
+          })}
+          value={customFileState}
+          onChange={(_event, value) => {
+            if (value)
+              handleCustomFileChange(value)
+          }}
+          disabled={blocked}
+          options={fileArray.filter((file) => file.type !== FileTypes.FOLDER)}
+          groupBy={(option) => option.parent?.id || 'root'}
+          getOptionLabel={(option) => option.label}
+          isOptionEqualToValue={(option, value) => option.id === value.id}
+          renderInput={(params) => 
+            <TextField
+              {...params}
+              label="Custom File"
+              error={Boolean(customError)}
+            />
+          }
+          renderGroup={(params) => (
+            <li key={params.key}>
+              <Box sx={{ px: '0.5rem' }}>
+                <StyledGroupParamsMenuItemTypographyBold>{`${params.group}:`}</StyledGroupParamsMenuItemTypographyBold>
+              </Box>
+              <StyledGroupParamsMenuItemTypography>{params.children}</StyledGroupParamsMenuItemTypography>
+            </li>
+          )}
+        />
       </Box>
     </Box>
   );
