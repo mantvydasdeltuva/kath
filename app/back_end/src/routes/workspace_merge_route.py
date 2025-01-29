@@ -23,11 +23,14 @@ from ..constants import (
 from ..data.refactoring import (
     set_lovd_dtypes,
     set_gnomad_dtypes,
+    set_custom_file_dtypes,
     set_clinvar_dtypes,
     parse_lovd,
     parse_gnomad,
+    parse_custom_file,
     clinvar_file_parse,
     merge_gnomad_lovd,
+    merge_custom_file,
     merge_lovd_clinvar, transform_spdi_to_format
 )
 
@@ -128,6 +131,10 @@ def get_workspace_merge_all(relative_path):
         set_gnomad_dtypes(gnomad_data)
         set_clinvar_dtypes(clinvar_data)
 
+        if custom_file_param:
+            custom_data = parse_custom_file(custom_file)
+            set_custom_file_dtypes(custom_data)
+
         clinvar_data = transform_spdi_to_format(clinvar_data)
 
         variants_on_genome = lovd_data["Variants_On_Genome"].copy()
@@ -140,7 +147,11 @@ def get_workspace_merge_all(relative_path):
             how="left",
         )
         lovd_clinvar_data= merge_lovd_clinvar(lovd_data, clinvar_data)
-        final_data = merge_gnomad_lovd(lovd_clinvar_data, gnomad_data)
+        lovd_clinvar_gnomad_data = merge_gnomad_lovd(lovd_clinvar_data, gnomad_data)
+        if custom_file_param:
+            final_data = merge_custom_file(custom_data,lovd_clinvar_gnomad_data)
+        else:
+            final_data = lovd_clinvar_gnomad_data
 
         # Append existing data if we're not overriding
         if not existing_data.empty:
