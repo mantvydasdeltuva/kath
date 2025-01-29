@@ -3,7 +3,7 @@ import sqlite3
 
 from tqdm import tqdm
 
-from ..utils.logger import Logger
+from src.utils.logger import Logger
 
 logger = Logger.get(__name__)        
 
@@ -24,10 +24,9 @@ def assign_revel_scores(input_gene_data: pd.DataFrame, revel_db_file: str) -> pd
         for i in range(total_rows):
             pbar.update(1)
             hg38_gnomad_format = input_gene_data.loc[i, 'hg38_gnomad_format']
-            
+                
             if pd.isna(hg38_gnomad_format):
-                input_gene_data.loc[i, 'REVEL'] = pd.NA
-                continue
+                hg38_gnomad_format = input_gene_data.loc[i, 'variant_id_gnomad']
                 
             try:
                 chromosome, position, ref, alt = hg38_gnomad_format.split('-')
