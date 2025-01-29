@@ -80,7 +80,6 @@ def get_workspace_merge_all(relative_path):
     # - custom_file: string
     #     - The path to the custom file to be used in merge
     #     - This is optional, if empty it should be ignored
-    #     - Currently not present
 
     destination_path = os.path.join(WORKSPACE_DIR, uuid, relative_path)
     override = request.args.get(
@@ -89,6 +88,8 @@ def get_workspace_merge_all(relative_path):
     lovd_file = os.path.join(WORKSPACE_DIR, uuid, request.args.get("lovdFile"))
     clinvar_file = os.path.join(WORKSPACE_DIR, uuid, request.args.get("clinvarFile"))
     gnomad_file = os.path.join(WORKSPACE_DIR, uuid, request.args.get("gnomadFile"))
+    custom_file_param = request.args.get("customFile")
+    custom_file = os.path.join(WORKSPACE_DIR, uuid, custom_file_param) if custom_file_param else ""
 
     try:
         # Emit a feedback to the user's console
