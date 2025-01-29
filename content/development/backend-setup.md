@@ -74,7 +74,7 @@ This guide offers step-by-step instructions for setting up and running a **Flask
     Run the following command to install packages required for environment.
 
     ```bash
-    sudo apt install python3 python3-pip python3-venv redis
+    sudo apt install python3 python3-pip python3-venv redis unzip
     ```
 
 > [!info]
@@ -222,6 +222,15 @@ This guide offers step-by-step instructions for setting up and running a **Flask
     ```
 
     This will download the FASTA file "hg38.fa," which is required for _SpliceAI_ to function correctly.
+
+2. **Download REVEL file**
+
+    Execute the following command into terminal.
+
+    ```bash
+    mkdir -p src/workspace/revel && cd src/workspace/revel && curl -O https://rothsj06.dmz.hpc.mssm.edu/revel-v1.3_all_chromosomes.zip && unzip revel-v1.3_all_chromosomes.zip && cd ../.. && python3 scripts/revel.py workspace/revel/revel_with_transcript_ids workspace/revel/revel_with_transcript_ids.db && cd ..
+    ```
+    This will download "revel_with_transcript_ids" file that is required for correct work of REVEL. Python script will create database file for indexing REVEL values.
 
 ---
 
