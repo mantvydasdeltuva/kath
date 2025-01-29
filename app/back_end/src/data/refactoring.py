@@ -55,6 +55,19 @@ def set_clinvar_dtypes(df:pd.DataFrame):
         raise Exception(f"Failed to convert Clinvar data types: {e}") from e
 
 
+def set_custom_file_dtypes(df:pd.DataFrame):
+    """
+    Convert data from custom_file format table to desired data format based on specified data types.
+
+    :param DataFrame df: DataFrame containing custom_file data
+    :raises DtypeConversionError: if there is an error during data type conversion
+    """
+    try:
+        df.convert_dtypes()
+    except Exception as e:
+        raise Exception(f"Failed to convert custom_file data types: {e}") from e
+
+
 def infer_type(value:str):
     """
     Infer the type of given value based on its content.
@@ -167,6 +180,32 @@ def parse_gnomad(path:str=GNOMAD_PATH + '/gnomad_data.csv'):
         return gnomad_data
     except Exception as e:
         logging.error("Error parsing gnomAD data: %s", str(e))
+        raise e
+
+
+def parse_custom_file(path: str):
+    """
+    Parses data from a file (CSV or XLSX) into a pandas DataFrame.
+
+    :param str path: path to the data file
+    :returns: pandas DataFrame containing data
+    :rtype: pd.DataFrame
+    """
+
+    if not os.path.exists(path):
+        raise FileNotFoundError(f"The file at {path} does not exist.")
+
+    logging.info("Parsing file %s using parse_custom_file.", path)
+    try:
+        if path.endswith(".xlsx") or path.endswith(".xls"):
+            data = pd.read_excel(path, engine="openpyxl")
+        elif path.endswith(".csv"):
+            data = pd.read_csv(path, sep=',', encoding='UTF-8')
+        else:
+            raise ValueError("Unsupported file format. Only .csv and .xlsx files are allowed.")
+        return data
+    except Exception as e:
+        logging.error("Error parsing file data: %s", str(e))
         raise e
 
 
@@ -324,6 +363,63 @@ def merge_gnomad_lovd(lovd:pd.DataFrame, gnomad:pd.DataFrame):
     )
 
     return merged_frame
+
+
+def merge_custom_file(custom_data:pd.DataFrame, other_data:pd.DataFrame):
+    """
+    Merge custom data file and dataframes on genomic positions.
+
+    Parameters:
+    custom_data : pd.DataFrame
+        custom_data dataframe.
+    other_data : pd.DataFrame
+        other_data DataFrame.
+
+    Returns:
+    pd.DataFrame
+        Merged dataframe with combined information from custom file and dataframes.
+    """
+
+    custom_data_fill_hg38(custom_data)
+    custom_data.columns = [
+        col + '_custom' if not col.endswith('_custom') else col
+        for col in custom_data.columns
+    ]
+    merged_frame = pd.merge(
+        custom_data,
+        other_data,
+        how="outer",
+        left_on="hg38_data_custom",
+        right_on="hg38_gnomad_format"
+    )
+    return merged_frame
+
+
+def custom_data_fill_hg38(custom_data: pd.DataFrame):
+    """
+    Adds a new column 'hg38_gnomad_format' to store
+    the converted positions in the format '6-position-ref-alt',
+    without modifying existing columns.
+
+    :param custom_data: pandas DataFrame containing the following columns:
+        - 'Chromosome': Chromosome number (e.g., 'chr6').
+        - 'Position': Genomic position.
+        - 'REF': Reference allele.
+        - 'ALT': Alternate allele.
+
+    :return: None (modifies the input DataFrame in-place)
+    """
+
+    if custom_data.empty:
+        return
+    custom_data["hg38_data"] = (
+        custom_data["Chromosome"].str.replace("chr", "", regex=True) + "-" +
+        custom_data["Position"].astype(str) + "-" +
+        custom_data["REF"] + "-" +
+        custom_data["ALT"]
+    )
+    return custom_data
+
 
 
 def merge_lovd_clinvar(lovd:pd.DataFrame, clinvar:pd.DataFrame):
