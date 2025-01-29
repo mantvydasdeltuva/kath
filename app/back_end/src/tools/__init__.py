@@ -17,6 +17,10 @@ from .spliceai import (
     add_spliceai_eval_columns,
 )
 
+from .revel import (
+    main_revel_pipeline
+)
+
 __all__ = [
     # CADD related exports
     "BadResponseException",
@@ -31,4 +35,6 @@ __all__ = [
     "run_spliceai",
     "parse_spliceai_vcf",
     "add_spliceai_eval_columns",
+    # Revel related exports
+    "main_revel_pipeline",
 ]

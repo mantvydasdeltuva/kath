@@ -5,6 +5,7 @@ __pycache__
 
 # specific folders
 data/*
+app/back_end/src/workspace/revel
 
 # large gene reference files
 *.fa

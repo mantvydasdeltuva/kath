@@ -22,7 +22,8 @@ from ..constants import (
 
 from ..tools import (
     add_spliceai_eval_columns,
-    add_cadd_eval_column
+    add_cadd_eval_column,
+    main_revel_pipeline,
 )
 
 workspace_apply_route_bp = Blueprint("workspace_apply_route", __name__)
@@ -362,3 +363,147 @@ def get_workspace_apply_cadd(relative_path):
         return jsonify({"error": "An internal error occurred"}), 500
 
     return jsonify({"message": "CADD algorithm was successfully applied"}), 200
+
+
+# TODO - Implement the route to apply the REVEL algorithm to a file and save the result to the workspace. Currently, Idk why it does not work.
+@workspace_apply_route_bp.route(
+    f"{WORKSPACE_APPLY_ROUTE}/revel/<path:relative_path>", methods=["GET"]
+)
+def get_workspace_apply_revel(relative_path):
+    """
+    Route to apply the revel algorithm to a file and save the result to the workspace.
+    """
+
+    # Check if 'uuid' and 'sid' are provided in the headers
+    if "uuid" not in request.headers or "sid" not in request.headers:
+        return jsonify({"error": "UUID and SID headers are required"}), 400
+
+    uuid = request.headers.get("uuid")
+    sid = request.headers.get("sid")
+
+    # Check if 'override' and 'applyTo' are provided
+    if "override" not in request.args or "applyTo" not in request.args:
+        return (
+            jsonify({"error": "'override', and 'applyTo' parameters are required"}),
+            400,
+        )
+        
+    destination_path = os.path.join(WORKSPACE_DIR, uuid, relative_path)
+    override = request.args.get("override")
+    apply_to = os.path.join(WORKSPACE_DIR, uuid, request.args.get("applyTo"))
+    revel_db_path = os.path.join(WORKSPACE_DIR, "revel", "revel_with_transcript_ids.db")
+
+    try:
+        # Emit a feedback to the user's console
+        socketio_emit_to_user_session(
+            CONSOLE_FEEDBACK_EVENT,
+            {
+                "type": "info",
+                "message": f"Applying REVEL algorithm to '{relative_path}' with "
+                + f"override: '{override}'...",
+            },
+            uuid,
+            sid,
+        )
+        try:
+            result_data_revel = main_revel_pipeline(dataset_path = apply_to, revel_db_path = revel_db_path)
+        except Exception as e:
+            raise RuntimeError(f"Error applying REVEL algorithm: {e}")
+
+        try:
+            result_data_revel.to_csv(destination_path, index=False)
+        except OSError as e:
+            raise RuntimeError(f"Error saving file: {e}")
+
+        # Emit a feedback to the user's console
+        socketio_emit_to_user_session(
+            CONSOLE_FEEDBACK_EVENT,
+            {
+                "type": "succ",
+                "message": f"REVEL algorithm was successfully applied to '{relative_path}'.",
+            },
+            uuid,
+            sid,
+        )
+
+        socketio_emit_to_user_session(
+            WORKSPACE_UPDATE_FEEDBACK_EVENT,
+            {"status": "updated"},
+            uuid,
+            sid,
+        )
+
+    except FileNotFoundError as e:
+        logger.error(
+            "FileNotFoundError: %s while applying REVEL algorithm %s",
+            e,
+            destination_path,
+        )
+        # Emit a feedback to the user's console
+        socketio_emit_to_user_session(
+            CONSOLE_FEEDBACK_EVENT,
+            {
+                "type": "errr",
+                "message": f"FileNotFoundError: {e} while applying REVEL algorithm"
+                + f"{destination_path}",
+            },
+            uuid,
+            sid,
+        )
+        return jsonify({"error": "Requested file not found"}), 404
+    except PermissionError as e:
+        logger.error(
+            "PermissionError: %s while applying REVEL algorithm %s",
+            e,
+            destination_path,
+        )
+        # Emit a feedback to the user's console
+        socketio_emit_to_user_session(
+            CONSOLE_FEEDBACK_EVENT,
+            {
+                "type": "errr",
+                "message": f"PermissionError: {e} while applying REVEL algorithm"
+                + f"{destination_path}",
+            },
+            uuid,
+            sid,
+        )
+        return jsonify({"error": "Permission denied"}), 403
+    except UnexpectedError as e:
+        logger.error(
+            "UnexpectedError: %s while applying REVEL algorithm %s",
+            e.message,
+            destination_path,
+        )
+        # Emit a feedback to the user's console
+        socketio_emit_to_user_session(
+            CONSOLE_FEEDBACK_EVENT,
+            {
+                "type": "errr",
+                "message": f"UnexpectedError: {e.message} while applying REVEL algorithm"
+                + f"{destination_path}",
+            },
+            uuid,
+            sid,
+        )
+        return jsonify({"error": "An internal error occurred"}), 500
+    except Exception as e:
+        logger.error(
+            "UnexpectedError: %s while applying REVEL algorithm %s",
+            e,
+            destination_path,
+        )
+        # Emit a feedback to the user's console
+        socketio_emit_to_user_session(
+            CONSOLE_FEEDBACK_EVENT,
+            {
+                "type": "errr",
+                "message": f"UnexpectedError: {e} while applying REVEL algorithm"
+                + f"{destination_path}",
+            },
+            uuid,
+            sid,
+        )
+        return jsonify({"error": "An internal error occurred"}), 500
+
+    return jsonify({"message": "REVEL algorithm was successfully applied"}), 200

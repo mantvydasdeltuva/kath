@@ -52,7 +52,7 @@ This guide provides instructions on setting up and running a Flask-based develop
 
 3. **Install Required Packages:**
    ```bash
-   sudo apt install python3 python3-pip python3-venv redis
+   sudo apt install python3 python3-pip python3-venv redis unzip
    ```
 
    With any prompts type `y` and press `enter`.
@@ -160,7 +160,13 @@ This guide provides instructions on setting up and running a Flask-based develop
    ```
    This will download FASTA "hg38.fa" file that is required for correct work of SpliceAI
 
-3. **Run the application**
+3. **Download REVEL file**
+   ```powershell
+   mkdir -p src/workspace/revel && cd src/workspace/revel && curl -O https://rothsj06.dmz.hpc.mssm.edu/revel-v1.3_all_chromosomes.zip && unzip revel-v1.3_all_chromosomes.zip && cd ../.. && python3 scripts/revel.py workspace/revel/revel_with_transcript_ids workspace/revel/revel_with_transcript_ids.db && cd ..
+   ```
+   This will download "revel_with_transcript_ids" file that is required for correct work of REVEL. Python script will create database file for indexing REVEL values.
+
+4. **Run the application**
    ```powershell
    gunicorn -c gunicorn_config.py run:app
    ```
