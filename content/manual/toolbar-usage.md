@@ -121,7 +121,7 @@ The _Apply_ section allows you to run algorithms on your databases to analyze, p
 
 ### How To Use
 
-![]()
+![](../assets/video/manual_toolbar_apply.mp4)
 
 1. **Select Database**: Choose the database file you want to process from the _Apply To_ dropdown.
 2. **Choose Save Location**:
