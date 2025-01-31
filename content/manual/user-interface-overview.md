@@ -8,7 +8,9 @@ date: 2025-01-30
 draft: false
 ---
 
-This guide provides a **high-level overview of the user interface (UI) layout** and its main components. Below is an overview of the main UI elements:
+This guide provides a **high-level overview of the user interface (UI) layout** and its main components. Below is an overview of the main UI elements.
+
+![](../assets/video/manual_user_interface.mp4)
 
 ---
 
