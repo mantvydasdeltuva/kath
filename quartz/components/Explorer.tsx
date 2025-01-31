@@ -19,9 +19,6 @@ const defaultOptions = {
       // set emoji for file
       if (node.file) {
         switch (node.name) {
-          case "getting-started":
-            node.displayName = "🗺️" + node.displayName
-            break
           case "user-interface-overview":
             node.displayName = "💬" + node.displayName
             break
@@ -94,7 +91,7 @@ const defaultOptions = {
       const customFileOrder = [
         // root folder
         // root.manual folder
-        'getting-started', 'user-interface-overview', 'toolbar-usage',
+        'user-interface-overview', 'toolbar-usage',
         // root.deployment folder 
         'user-interface-installation', 'server-installation',
         // root.development folder
