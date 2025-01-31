@@ -22,6 +22,18 @@ const defaultOptions = {
           case "getting-started":
             node.displayName = "🗺️" + node.displayName
             break
+          case "user-interface-overview":
+            node.displayName = "💬" + node.displayName
+            break
+          case "filetree-usage":
+            node.displayName = "🌳" + node.displayName
+            break
+          case "toolbar-usage":
+            node.displayName = "🧰" + node.displayName
+            break
+          case "editor-usage":
+            node.displayName = "✏️" + node.displayName
+            break
           case "user-interface-installation":
             node.displayName = "🖥️" + node.displayName
             break
@@ -82,7 +94,7 @@ const defaultOptions = {
       const customFileOrder = [
         // root folder
         // root.manual folder
-        'interface-components',
+        'getting-started', 'user-interface-overview', 'toolbar-usage',
         // root.deployment folder 
         'user-interface-installation', 'server-installation',
         // root.development folder
