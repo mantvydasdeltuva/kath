@@ -49,7 +49,7 @@ The tool bar is located at the top of the application which **provides core func
 - **Merge** - combines multiple databases into a single one.
 - **Apply** - enables you to run algorithms to analyze, process, or enhance your data.
 
-For more in-depth information on how to use these features, visit the [[toolbar-usage|Tool bar Usage]] documentation.
+For more in-depth information on how to use these features, visit the [[toolbar-usage|Tool Bar Usage]] documentation.
 
 ---
 
