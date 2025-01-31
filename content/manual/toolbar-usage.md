@@ -82,7 +82,7 @@ The _Merge_ section allows you to combine multiple databases into a single file 
 
 ### How To Use
 
-![]()
+![](../assets/video/manual_toolbar_merge.mp4)
 
 1. **Select Databases**:
     - Choose the _LOVD_, _ClinVar_, and _gnomAD_ files you want to merge.
