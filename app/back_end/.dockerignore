@@ -1,0 +1,16 @@
+**/*.db
+**/*.fa
+**/*.fa.gz
+**/*.tar
+**/*.tar.gz
+**/*.zip
+**/.dockerignore
+**/.idea
+**/.venv
+**/.vs
+**/.vscode
+**/Dockerfile*
+**/README.md
+**/__pycache__
+./src/workspace/fasta
+./src/workspace/revel
