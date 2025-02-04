@@ -76,19 +76,6 @@ class Env:
         return cls.get("FLASK_RUN_PORT", 8080)
 
     @classmethod
-    def get_origins(cls):
-        """
-        Get the list of allowed origins for CORS from environment variables.
-
-        This is used for configuring CORS policies in the Flask app.
-
-        Returns:
-            list: A list of origins allowed for CORS, defaulting to ["*"].
-        """
-        origins = cls.get("ORIGINS", "*")
-        return origins.split(",")
-
-    @classmethod
     def get_redis_url(cls):
         """
         Get the Redis URL from environment variables.
